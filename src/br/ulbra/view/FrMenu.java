@@ -24,9 +24,9 @@ public class FrMenu extends javax.swing.JFrame {
     /**
      * Creates new form FrMenu
      */
-    public FrMenu() {
+    public FrMenu() throws SQLException {
         initComponents();
-
+        readJTable();
         this.setLocationRelativeTo(null);//centraliza no centro da tela ao executar
     }
 
@@ -49,8 +49,7 @@ public class FrMenu extends javax.swing.JFrame {
     }
 
     public void readJTableForDesc(String nome) throws SQLException {
-        DefaultTableModel modelo
-                = (DefaultTableModel) tbPontos.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) tbPontos.getModel();
         modelo.setNumRows(0);
         PontoDAO pdao = new PontoDAO();
         for (Ponto p : pdao.readForDesc(nome)) {
@@ -134,7 +133,7 @@ public class FrMenu extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbPontos);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Adicionar ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -195,6 +194,11 @@ public class FrMenu extends javax.swing.JFrame {
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setText("Pontos Turísticos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_END, java.awt.event.InputEvent.CTRL_MASK));
@@ -249,17 +253,23 @@ public class FrMenu extends javax.swing.JFrame {
     private void edPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edPesquisaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edPesquisaActionPerformed
-FrPontos p = new FrPontos();
+
 
     private void tbPontosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPontosMouseClicked
 
-        
+        FrPontos p = null;
+        try {
+            p = new FrPontos();
+        } catch (SQLException ex) {
+            Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         p.setVisible(true);
         p.controlarBtn(3);
         //puxa as informações do banco de dados
         if (tbPontos.getSelectedRow() != -1) {
 
             //seta as informações do banco nas linhas da tabela da view, em ordem de colunas
+            
             p.getEdCodigo().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 0).toString());
             p.getEdNome().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 1).toString());
             p.getEdRua().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 2).toString());
@@ -272,6 +282,19 @@ FrPontos p = new FrPontos();
     }//GEN-LAST:event_tbPontosMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        try {
+            new FrPontos().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        FrPontos p = null;
+        try {
+            p = new FrPontos();
+        } catch (SQLException ex) {
+            Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         p.controlarBtn(2);
 
         p.getEdNome().setText("");
@@ -282,9 +305,16 @@ FrPontos p = new FrPontos();
         p.getEdEstado().setText("");
         p.getEdContato().setText("");
         p.getEdDescricao().setText("");
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        try {
+            new FrPontos().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
 /**
  * @param args the command line arguments
@@ -300,27 +330,59 @@ public static void main(String args[]) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 
+
+
+
+
 
 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(FrUsuario.class
+
+
+
 .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         
+
+
+
+
 
 } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(FrUsuario.class
+
+
+
 .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         
+
+
+
+
 
 } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(FrUsuario.class
+
+
+
 .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         
+
+
+
+
 
 } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrUsuario.class
+
+
+
 .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -329,14 +391,13 @@ public static void main(String args[]) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new FrUsuario().setVisible(true);
-                
 
-} catch (SQLException ex) {
-                    Logger.getLogger(FrUsuario.class
-.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    new FrMenu().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             }
         });
     }

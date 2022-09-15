@@ -24,7 +24,8 @@ public class PontoDAO {
     public void create(Ponto p) {
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO tbPontos(nomePonto, ruaPonto, "
+            System.out.println("Entrei no Create");
+            stmt = con.prepareStatement("INSERT INTO tbpontos(nomePonto, ruaPonto, "
                     + "numeroPonto, cidadePonto, estadoPonto, contatoPonto, descricaoPonto) "
                     + "VALUES( ?,  ?,  ?,  ?,  ?, ?, ?)");
 
@@ -53,7 +54,7 @@ public class PontoDAO {
 
         try {
 
-            stmt = con.prepareStatement("DELETE FROM tbPonto WHERE idPonto = ? ");
+            stmt = con.prepareStatement("DELETE FROM tbpontos WHERE idPonto = ? ");
             stmt.setInt(1, p.getIdPonto());
 
             stmt.executeUpdate();
@@ -76,7 +77,7 @@ public class PontoDAO {
         try {
 
             stmt = con.prepareStatement("UPDATE tbpontos SET nomePonto =  ?, ruaPonto = ?, numeroPonto =  ?, "
-                    + "cidadePonto =  ?, estadoPonto =  ?, contatoPonto = ?, descricaoPonto = ? WHERE  idPonto =  ?  ");
+                    + "cidadePonto =  ?, estadoPonto =  ?, contatoPonto = ?, descricaoPonto = ? WHERE  idPonto = ?");
 
             stmt.setString(1, p.getNomePonto());
             stmt.setString(2, p.getRuaPonto());
@@ -85,6 +86,7 @@ public class PontoDAO {
             stmt.setString(5, p.getEstadoPonto());
             stmt.setString(6, p.getContatoPonto());
             stmt.setString(7, p.getDescricaoPonto());
+            stmt.setInt(8, p.getIdPonto());
 
             stmt.executeUpdate();
 
@@ -104,7 +106,7 @@ public class PontoDAO {
         ResultSet rs = null;
         List<Ponto> pontos = new ArrayList<>();
         try {
-            stmt = con.prepareStatement("SELECT * FROM tbPontos");
+            stmt = con.prepareStatement("SELECT * FROM tbpontos");
             rs = stmt.executeQuery();
             while (rs.next()) {
                 

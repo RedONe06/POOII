@@ -29,7 +29,7 @@ public class UsuarioDAO {
 
         try {
 
-            stmt = con.prepareStatement("SELECT * FROM tbusuario "
+            stmt = con.prepareStatement("SELECT * FROM tbusuario"
                     + " WHERE emailUsu = ? and senhaUsu = ?");
             stmt.setString(1, login);
             stmt.setString(2, senha);

@@ -37,7 +37,7 @@ public class FrLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btlogar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btFechar = new javax.swing.JButton();
         edEmail = new javax.swing.JTextField();
         edSenha = new javax.swing.JPasswordField();
 
@@ -71,13 +71,13 @@ public class FrLogin extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2921800_confidential_encryption_lock_password_privacy_icon (2).png"))); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(51, 51, 255));
-        jButton1.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("FECHAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btFechar.setBackground(new java.awt.Color(51, 51, 255));
+        btFechar.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
+        btFechar.setForeground(new java.awt.Color(0, 0, 0));
+        btFechar.setText("FECHAR");
+        btFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btFecharActionPerformed(evt);
             }
         });
 
@@ -121,7 +121,7 @@ public class FrLogin extends javax.swing.JFrame {
                                 .addGap(34, 34, 34)
                                 .addComponent(btlogar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(41, 41, 41)
-                                .addComponent(jButton1)))
+                                .addComponent(btFechar)))
                         .addContainerGap())))
         );
         panelLayout.setVerticalGroup(
@@ -142,7 +142,7 @@ public class FrLogin extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btlogar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -175,11 +175,12 @@ public class FrLogin extends javax.swing.JFrame {
 
     private void btlogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlogarActionPerformed
 
-       UsuarioDAO dao = null;
+   
    
         try {
-            dao = new UsuarioDAO();
+            UsuarioDAO dao = new UsuarioDAO();
             if (dao.checkLogin(edEmail.getText(), edSenha.getText())) {
+                
                 new FrMenu().setVisible(true);
                 this.dispose();
             } else {
@@ -192,10 +193,10 @@ public class FrLogin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btlogarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
         this.dispose();
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btFecharActionPerformed
 
     private void edEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edEmailActionPerformed
         // TODO add your handling code here:
@@ -238,10 +239,10 @@ public class FrLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btFechar;
     private javax.swing.JButton btlogar;
     private javax.swing.JTextField edEmail;
     private javax.swing.JPasswordField edSenha;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
