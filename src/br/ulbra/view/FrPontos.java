@@ -120,7 +120,6 @@ public class FrPontos extends javax.swing.JFrame {
     private void initComponents() {
 
         pnCad = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -140,6 +139,10 @@ public class FrPontos extends javax.swing.JFrame {
         edEstado = new javax.swing.JTextField();
         edContato = new javax.swing.JFormattedTextField();
         edCodigo = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -150,61 +153,60 @@ public class FrPontos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnCad.setBackground(new java.awt.Color(255, 129, 79));
+        pnCad.setBackground(new java.awt.Color(51, 51, 51));
         pnCad.setForeground(new java.awt.Color(255, 129, 79));
         pnCad.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/artboard-12_89035.png"))); // NOI18N
-        pnCad.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 140, 160));
+        jLabel3.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel3.setText("CÓDIGO");
+        pnCad.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Cod");
-        pnCad.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        jLabel4.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setText("NOME");
+        pnCad.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, 20));
 
-        jLabel4.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Nome");
-        pnCad.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, 30));
+        jLabel5.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setText("NÚMERO");
+        pnCad.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Número");
-        pnCad.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+        jLabel6.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel6.setText("RUA");
+        pnCad.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Rua");
-        pnCad.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+        jLabel8.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel8.setText("ESTADO");
+        pnCad.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Estado");
-        pnCad.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
-
-        edNome.setBackground(new java.awt.Color(255, 255, 204));
+        edNome.setBackground(new java.awt.Color(204, 204, 204));
         edNome.setForeground(new java.awt.Color(0, 0, 0));
+        edNome.setBorder(null);
         edNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edNomeActionPerformed(evt);
             }
         });
-        pnCad.add(edNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 460, 30));
+        pnCad.add(edNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 250, 30));
 
-        edRua.setBackground(new java.awt.Color(255, 255, 204));
+        edRua.setBackground(new java.awt.Color(204, 204, 204));
         edRua.setForeground(new java.awt.Color(0, 0, 0));
-        pnCad.add(edRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 410, 30));
+        edRua.setBorder(null);
+        pnCad.add(edRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 250, 30));
 
+        btSalvar.setBackground(new java.awt.Color(0, 153, 102));
         btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salvar.png"))); // NOI18N
-        btSalvar.setText("SALVAR");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSalvarActionPerformed(evt);
             }
         });
-        pnCad.add(btSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, 120, 40));
+        pnCad.add(btSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 190, 40));
 
-        btAlterar.setBackground(new java.awt.Color(255, 129, 79));
+        btAlterar.setBackground(new java.awt.Color(255, 102, 102));
         btAlterar.setForeground(new java.awt.Color(255, 129, 79));
         btAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-engrenagem-30.png"))); // NOI18N
         btAlterar.setToolTipText("");
@@ -215,9 +217,9 @@ public class FrPontos extends javax.swing.JFrame {
                 btAlterarActionPerformed(evt);
             }
         });
-        pnCad.add(btAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 410, 40, 40));
+        pnCad.add(btAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 170, 40));
 
-        btExcluir.setBackground(new java.awt.Color(255, 129, 79));
+        btExcluir.setBackground(new java.awt.Color(255, 102, 102));
         btExcluir.setForeground(new java.awt.Color(255, 129, 79));
         btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lixeira.png"))); // NOI18N
         btExcluir.setBorder(null);
@@ -227,41 +229,87 @@ public class FrPontos extends javax.swing.JFrame {
                 btExcluirActionPerformed(evt);
             }
         });
-        pnCad.add(btExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 410, 40, 40));
+        pnCad.add(btExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 150, 40));
 
-        jLabel9.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Descrição");
-        pnCad.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, 30));
+        jLabel9.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel9.setText("DESCRICÃO");
+        pnCad.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, -1, 20));
 
-        jLabel10.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("Cidade");
-        pnCad.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
+        jLabel10.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel10.setText("CIDADE");
+        pnCad.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("Contato");
-        pnCad.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, 30));
-        pnCad.add(edNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 120, 30));
-        pnCad.add(edCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 120, 30));
+        jLabel11.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel11.setText("CONTATO");
+        pnCad.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, -1, 20));
 
+        edNumero.setBackground(new java.awt.Color(204, 204, 204));
+        edNumero.setBorder(null);
+        pnCad.add(edNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 120, 30));
+
+        edCidade.setBackground(new java.awt.Color(204, 204, 204));
+        edCidade.setBorder(null);
+        pnCad.add(edCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 250, 30));
+
+        edDescricao.setBackground(new java.awt.Color(204, 204, 204));
+        edDescricao.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        edDescricao.setBorder(null);
         edDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edDescricaoActionPerformed(evt);
             }
         });
-        pnCad.add(edDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 220, 30));
-        pnCad.add(edEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 110, 30));
-        pnCad.add(edContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, 110, 30));
-        pnCad.add(edCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 70, 30));
+        pnCad.add(edDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 260, 150));
+
+        edEstado.setBackground(new java.awt.Color(204, 204, 204));
+        edEstado.setBorder(null);
+        pnCad.add(edEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 120, 30));
+
+        edContato.setBackground(new java.awt.Color(204, 204, 204));
+        edContato.setBorder(null);
+        pnCad.add(edContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 260, 30));
+
+        edCodigo.setBackground(new java.awt.Color(204, 204, 204));
+        edCodigo.setFont(new java.awt.Font("Yu Gothic Medium", 1, 18)); // NOI18N
+        edCodigo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pnCad.add(edCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 40, 30));
+
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel7.setText("REBORN |");
+        pnCad.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel12.setText("Places");
+        pnCad.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, -1, 20));
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-place-marker-30 (1).png"))); // NOI18N
+        pnCad.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, -1, -1));
+
+        jPanel3.setBackground(new java.awt.Color(0, 153, 102));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+
+        pnCad.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 740, 20));
 
         jMenuBar1.setMaximumSize(new java.awt.Dimension(200, 32769));
-        jMenuBar1.setMinimumSize(new java.awt.Dimension(0, 2));
         jMenuBar1.setPreferredSize(new java.awt.Dimension(184, 26));
 
         jMenu1.setText("Cadastros");
-        jMenu1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenu1.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Usuários");
@@ -284,7 +332,7 @@ public class FrPontos extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Relatórios");
-        jMenu2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenu2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
 
         jMenuItem4.setText("Rel 1");
         jMenu2.add(jMenuItem4);
@@ -305,11 +353,13 @@ public class FrPontos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnCad, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+            .addComponent(pnCad, javax.swing.GroupLayout.PREFERRED_SIZE, 590, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnCad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -480,13 +530,15 @@ public class FrPontos extends javax.swing.JFrame {
     private javax.swing.JTextField edNome;
     private javax.swing.JTextField edNumero;
     private javax.swing.JTextField edRua;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
@@ -496,6 +548,7 @@ public class FrPontos extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel pnCad;
     // End of variables declaration//GEN-END:variables
 }

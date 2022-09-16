@@ -2,7 +2,7 @@ package br.ulbra.entity;
 
 /**
  *
- * @author 
+ * @author
  */
 public class Usuario {
 
@@ -16,7 +16,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int idUsu, String nomeUsu, String emailUsu, 
+    public Usuario(int idUsu, String nomeUsu, String emailUsu,
             String senhaUsu, String foneUsu, int sexoUsu) {
         this.idUsu = idUsu;
         this.nomeUsu = nomeUsu;
@@ -24,14 +24,6 @@ public class Usuario {
         this.senhaUsu = senhaUsu;
         this.foneUsu = foneUsu;
         this.sexoUsu = sexoUsu;
-    }
-    public String toString(){
-        return " ID:    "+this.idUsu
-              +" Nome:  "+this.nomeUsu
-              +" E-mail:"+this.emailUsu
-              +" Senha: "+this.senhaUsu
-              +" Fone:  "+this.foneUsu
-              +" Sexo:  "+this.sexoUsu;
     }
 
     public int getIdUsu() {
@@ -81,8 +73,14 @@ public class Usuario {
     public void setSexoUsu(int sexoUsu) {
         this.sexoUsu = sexoUsu;
     }
-  
-   
-    
 
+    @Override
+    public String toString() {
+        return " ID:    " + this.idUsu
+                + " Nome:  " + this.nomeUsu
+                + " E-mail:" + this.emailUsu
+                + " Senha: " + this.senhaUsu
+                + " Fone:  " + this.foneUsu
+                + " Sexo:  " + this.sexoUsu;
+    }
 }
