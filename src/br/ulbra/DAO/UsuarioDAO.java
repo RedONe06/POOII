@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import br.ulbra.entity.Usuario;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UsuarioDAO {
 
@@ -46,6 +48,8 @@ public class UsuarioDAO {
 
         return check;
     }
+    
+    
 
     public void create(Usuario u) {
         

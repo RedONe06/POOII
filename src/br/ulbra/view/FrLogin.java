@@ -73,6 +73,7 @@ public class FrLogin extends javax.swing.JFrame {
         btFechar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btFechar.setForeground(new java.awt.Color(204, 204, 204));
         btFechar.setText("FECHAR");
+        btFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btFecharActionPerformed(evt);
@@ -81,9 +82,9 @@ public class FrLogin extends javax.swing.JFrame {
 
         edEmail.setBackground(new java.awt.Color(204, 204, 204));
         edEmail.setForeground(new java.awt.Color(51, 51, 51));
-        edEmail.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         edEmail.setBorder(null);
         edEmail.setCaretColor(new java.awt.Color(51, 51, 51));
+        edEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         edEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edEmailActionPerformed(evt);

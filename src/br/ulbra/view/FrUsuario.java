@@ -10,6 +10,8 @@ import br.ulbra.entity.Usuario;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -357,6 +359,37 @@ public class FrUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_edNomeActionPerformed
 
+    public boolean useRegex(String input) {
+        // Compile regular expression
+        Pattern pattern = Pattern.compile("[a-zA-Z]+@[a-zA-Z]+\\.[a-zA-Z]+", Pattern.CASE_INSENSITIVE);
+        // Match regex against input
+        Matcher matcher = pattern.matcher(input);
+        // Use results...
+        return matcher.matches();
+    }
+    
+    private boolean ehEmailValido(String email) {
+        JOptionPane.showMessageDialog(null,  useRegex(email));
+        if (useRegex(email)) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Email inválido.");
+            return false;
+        }
+    }
+
+    private boolean ehSenhaValida(String senha, String senha2) {
+        if (senha.equals(senha2)) {
+            return true;
+
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Você inseriu senhas diferentes!");
+            return false;
+        }
+    }
+
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
         Usuario u = new Usuario();
@@ -379,14 +412,12 @@ public class FrUsuario extends javax.swing.JFrame {
                 } else {
                     u.setSexoUsu(3);
                 }
-                System.out.println();
-                if (edSenha1.getText().equals(edSenha2.getText())) {
+                
+                if(ehSenhaValida(edSenha1.getText(),edSenha2.getText()) && ehEmailValido(edEmail.getText())){
                     ud.create(u);
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Você inseriu senhas diferentes!");
+                    controlarBtn(1);
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos");
             }
 
@@ -394,7 +425,7 @@ public class FrUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
         }
 
-        controlarBtn(1);
+       
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
@@ -450,13 +481,14 @@ public class FrUsuario extends javax.swing.JFrame {
         edNome.setText("");
         edEmail.setText("");
         edSenha1.setText("");
+        edSenha2.setText("");
         edFone.setText("");
         rbO.setSelected(true);
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void tbUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbUsuarioMouseClicked
         controlarBtn(3);
-       
+
         //puxa as informações do banco de dados
         if (tbUsuario.getSelectedRow() != -1) {
 
