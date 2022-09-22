@@ -12,18 +12,31 @@ public class Usuario {
     private String senhaUsu;
     private String foneUsu;
     private int sexoUsu;
-
+    private String cepUsu;
+    private String logradouroUsu;
+    private String bairroUsu;
+    private String cidadeUsu;
+    private String estadoUsu;
+    private int numeroUsu;
+    
     public Usuario() {
     }
 
-    public Usuario(int idUsu, String nomeUsu, String emailUsu,
-            String senhaUsu, String foneUsu, int sexoUsu) {
+    public Usuario(int idUsu, String nomeUsu, String emailUsu, String senhaUsu,
+            String foneUsu, int sexoUsu, String cepUsu, String logradouroUsu,
+            String bairroUsu, String cidadeUsu, String estadoUsu, int numeroUsu) {
         this.idUsu = idUsu;
         this.nomeUsu = nomeUsu;
         this.emailUsu = emailUsu;
         this.senhaUsu = senhaUsu;
         this.foneUsu = foneUsu;
         this.sexoUsu = sexoUsu;
+        this.cepUsu = cepUsu;
+        this.logradouroUsu = logradouroUsu;
+        this.bairroUsu = bairroUsu;
+        this.cidadeUsu = cidadeUsu;
+        this.estadoUsu = estadoUsu;
+        this.numeroUsu = numeroUsu;
     }
 
     public int getIdUsu() {
@@ -72,6 +85,54 @@ public class Usuario {
 
     public void setSexoUsu(int sexoUsu) {
         this.sexoUsu = sexoUsu;
+    }
+
+    public String getCepUsu() {
+        return cepUsu;
+    }
+
+    public void setCepUsu(String cepUsu) {
+        this.cepUsu = cepUsu;
+    }
+
+    public String getLogradouroUsu() {
+        return logradouroUsu;
+    }
+
+    public void setLogradouroUsu(String logradouroUsu) {
+        this.logradouroUsu = logradouroUsu;
+    }
+
+    public String getBairroUsu() {
+        return bairroUsu;
+    }
+
+    public void setBairroUsu(String bairroUsu) {
+        this.bairroUsu = bairroUsu;
+    }
+
+    public String getCidadeUsu() {
+        return cidadeUsu;
+    }
+
+    public void setCidadeUsu(String cidadeUsu) {
+        this.cidadeUsu = cidadeUsu;
+    }
+
+    public String getEstadoUsu() {
+        return estadoUsu;
+    }
+
+    public void setEstadoUsu(String estadoUsu) {
+        this.estadoUsu = estadoUsu;
+    }
+
+    public int getNumeroUsu() {
+        return numeroUsu;
+    }
+
+    public void setNumeroUsu(int numeroUsu) {
+        this.numeroUsu = numeroUsu;
     }
 
     @Override

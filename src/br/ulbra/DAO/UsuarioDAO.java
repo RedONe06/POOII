@@ -57,13 +57,21 @@ public class UsuarioDAO {
         
         try {
             stmt = con.prepareStatement("INSERT INTO tbusuario(nomeusu,emailusu, "
-                    + "senhausu, foneusu, sexousu) VALUES( ?,  ?,  ?,  ?,  ? )");
+                    + "senhausu, foneusu, sexousu, cepUsu, logradouroUsu, "
+                    + "bairroUsu, cidadeUsu, estadoUsu, numeroUsu) "
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
             stmt.setString(1, u.getNomeUsu());
             stmt.setString(2, u.getEmailUsu());
             stmt.setString(3, u.getSenhaUsu());
             stmt.setString(4, u.getFoneUsu());
             stmt.setInt(5, u.getSexoUsu());
+            stmt.setString(6, u.getCepUsu());
+            stmt.setString(7, u.getLogradouroUsu());
+            stmt.setString(8, u.getBairroUsu());
+            stmt.setString(9, u.getCidadeUsu());
+            stmt.setString(10, u.getEstadoUsu());
+            stmt.setInt(11, u.getNumeroUsu());
             
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Usuário Salvo com sucesso!");
@@ -99,7 +107,9 @@ public class UsuarioDAO {
 
         try {
             stmt = con.prepareStatement("UPDATE tbusuario SET nomeUsu =  ?, "
-                    + "emailusu = ?, senhausu =  ?, foneusu =  ?, sexousu =  ? "
+                    + "emailusu = ?, senhausu =  ?, foneusu =  ?, sexousu =  ?, "
+                    + "cepUsu = ?, logradouroUsu = ?, bairroUsu = ?, cidadeUsu = ?, "
+                    + "estadoUsu = ?, numeroUsu = ?"
                     + "WHERE  idusu =  ?  ");
             
             stmt.setString(1, u.getNomeUsu());
@@ -107,7 +117,13 @@ public class UsuarioDAO {
             stmt.setString(3, u.getSenhaUsu());
             stmt.setString(4, u.getFoneUsu());
             stmt.setInt(5, u.getSexoUsu());
-            stmt.setInt(6, u.getIdUsu());
+            stmt.setString(6, u.getCepUsu());
+            stmt.setString(7, u.getLogradouroUsu());
+            stmt.setString(8, u.getBairroUsu());
+            stmt.setString(9, u.getCidadeUsu());
+            stmt.setString(10, u.getEstadoUsu());
+            stmt.setInt(11, u.getNumeroUsu());
+            stmt.setInt(12, u.getIdUsu());
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
@@ -137,6 +153,13 @@ public class UsuarioDAO {
                 usuario.setFoneUsu(rs.getString("foneUsu"));
                 usuario.setSexoUsu(rs.getInt("sexoUsu"));
                 usuario.setSenhaUsu(rs.getString("senhaUsu"));
+                usuario.setCepUsu(rs.getString("cepUsu"));
+                usuario.setLogradouroUsu(rs.getString("logradouroUsu"));
+                usuario.setBairroUsu(rs.getString("bairroUsu"));
+                usuario.setCidadeUsu(rs.getString("cidadeUsu"));
+                usuario.setEstadoUsu(rs.getString("estadoUsu"));
+                usuario.setNumeroUsu(rs.getInt("numeroUsu"));
+                
                 usuarios.add(usuario);
             }
             
@@ -169,6 +192,12 @@ public class UsuarioDAO {
                 usuario.setSenhaUsu(rs.getString("senhausu"));
                 usuario.setFoneUsu(rs.getString("foneusu"));
                 usuario.setSexoUsu(rs.getInt("sexousu"));
+                usuario.setCepUsu(rs.getString("cepUsu"));
+                usuario.setLogradouroUsu(rs.getString("logradouroUsu"));
+                usuario.setBairroUsu(rs.getString("bairroUsu"));
+                usuario.setCidadeUsu(rs.getString("cidadeUsu"));
+                usuario.setEstadoUsu(rs.getString("estadoUsu"));
+                usuario.setNumeroUsu(rs.getInt("numeroUsu"));
                 usuarios.add(usuario);
             }
             
