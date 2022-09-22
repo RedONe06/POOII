@@ -26,8 +26,8 @@ public class PontoDAO {
         try {
             System.out.println("Entrei no Create");
             stmt = con.prepareStatement("INSERT INTO tbpontos(nomePonto, ruaPonto, "
-                    + "numeroPonto, cidadePonto, estadoPonto, contatoPonto, descricaoPonto) "
-                    + "VALUES( ?,  ?,  ?,  ?,  ?, ?, ?)");
+                    + "numeroPonto, cidadePonto, estadoPonto, contatoPonto, descricaoPonto, cepPonto) "
+                    + "VALUES( ?,  ?,  ?,  ?,  ?, ?, ?, ?)");
 
             stmt.setString(1, p.getNomePonto());
             stmt.setString(2, p.getRuaPonto());
@@ -36,6 +36,7 @@ public class PontoDAO {
             stmt.setString(5, p.getEstadoPonto());
             stmt.setString(6, p.getContatoPonto());
             stmt.setString(7, p.getDescricaoPonto());
+            stmt.setString(8, p.getCepPonto());
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Ponto turístico salvo com sucesso!");
@@ -72,7 +73,7 @@ public class PontoDAO {
 
         try {
             stmt = con.prepareStatement("UPDATE tbpontos SET nomePonto =  ?, ruaPonto = ?, numeroPonto =  ?, "
-                    + "cidadePonto =  ?, estadoPonto =  ?, contatoPonto = ?, descricaoPonto = ? WHERE  idPonto = ?");
+                    + "cidadePonto =  ?, estadoPonto =  ?, contatoPonto = ?, descricaoPonto = ?, cepPonto = ? WHERE  idPonto = ?");
 
             stmt.setString(1, p.getNomePonto());
             stmt.setString(2, p.getRuaPonto());
@@ -82,6 +83,7 @@ public class PontoDAO {
             stmt.setString(6, p.getContatoPonto());
             stmt.setString(7, p.getDescricaoPonto());
             stmt.setInt(8, p.getIdPonto());
+            stmt.setString(9, p.getCepPonto());
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
@@ -115,6 +117,7 @@ public class PontoDAO {
                 ponto.setEstadoPonto(rs.getString("estadoPonto"));
                 ponto.setContatoPonto(rs.getString("contatoPonto"));
                 ponto.setDescricaoPonto(rs.getString("descricaoPonto"));
+                ponto.setCepPonto(rs.getString("cepPonto"));
                
                 pontos.add(ponto);
             }
@@ -150,6 +153,7 @@ public class PontoDAO {
                 ponto.setEstadoPonto(rs.getString("estadoPonto"));
                 ponto.setContatoPonto(rs.getString("contatoPonto"));
                 ponto.setDescricaoPonto(rs.getString("descricaoPonto"));
+                ponto.setCepPonto(rs.getString("cepPonto"));
                 pontos.add(ponto);
             }
             

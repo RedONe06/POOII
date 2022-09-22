@@ -91,6 +91,14 @@ public class FrPontos extends javax.swing.JFrame {
         this.edRua = edRua;
     }
 
+    public JFormattedTextField getEdCep() {
+        return edCep;
+    }
+
+    public void setEdCep(JFormattedTextField edCep) {
+        this.edCep = edCep;
+    }
+
     public void controlarBtn(int op) {
         switch (op) {
             case 1:
@@ -143,6 +151,9 @@ public class FrPontos extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        edCep = new javax.swing.JFormattedTextField();
+        jLabel14 = new javax.swing.JLabel();
+        btSalvar1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -195,6 +206,11 @@ public class FrPontos extends javax.swing.JFrame {
         edRua.setBackground(new java.awt.Color(204, 204, 204));
         edRua.setForeground(new java.awt.Color(0, 0, 0));
         edRua.setBorder(null);
+        edRua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edRuaActionPerformed(evt);
+            }
+        });
         pnCad.add(edRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 250, 30));
 
         btSalvar.setBackground(new java.awt.Color(0, 153, 102));
@@ -234,7 +250,7 @@ public class FrPontos extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(204, 204, 204));
         jLabel9.setText("DESCRICÃO");
-        pnCad.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, -1, 20));
+        pnCad.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, 20));
 
         jLabel10.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
@@ -243,7 +259,7 @@ public class FrPontos extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel11.setText("CONTATO");
+        jLabel11.setText("CEP");
         pnCad.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, -1, 20));
 
         edNumero.setBackground(new java.awt.Color(204, 204, 204));
@@ -262,7 +278,7 @@ public class FrPontos extends javax.swing.JFrame {
                 edDescricaoActionPerformed(evt);
             }
         });
-        pnCad.add(edDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 260, 150));
+        pnCad.add(edDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 260, 90));
 
         edEstado.setBackground(new java.awt.Color(204, 204, 204));
         edEstado.setBorder(null);
@@ -270,7 +286,7 @@ public class FrPontos extends javax.swing.JFrame {
 
         edContato.setBackground(new java.awt.Color(204, 204, 204));
         edContato.setBorder(null);
-        pnCad.add(edContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 260, 30));
+        pnCad.add(edContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 260, 30));
 
         edCodigo.setBackground(new java.awt.Color(204, 204, 204));
         edCodigo.setFont(new java.awt.Font("Yu Gothic Medium", 1, 18)); // NOI18N
@@ -304,6 +320,25 @@ public class FrPontos extends javax.swing.JFrame {
         );
 
         pnCad.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 740, 20));
+
+        edCep.setBackground(new java.awt.Color(204, 204, 204));
+        edCep.setBorder(null);
+        pnCad.add(edCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 140, 30));
+
+        jLabel14.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel14.setText("CONTATO");
+        pnCad.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, -1, 20));
+
+        btSalvar1.setBackground(new java.awt.Color(0, 153, 102));
+        btSalvar1.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        btSalvar1.setText("BUSCAR CEP");
+        btSalvar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvar1ActionPerformed(evt);
+            }
+        });
+        pnCad.add(btSalvar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 110, 30));
 
         jMenuBar1.setMaximumSize(new java.awt.Dimension(200, 32769));
         jMenuBar1.setPreferredSize(new java.awt.Dimension(184, 26));
@@ -393,6 +428,7 @@ public class FrPontos extends javax.swing.JFrame {
                 p.setEstadoPonto(edEstado.getText());
                 p.setContatoPonto(edContato.getText());
                 p.setDescricaoPonto(edDescricao.getText());
+                p.setCepPonto(edCep.getText());
                 
                 pd.create(p);
                 this.dispose();
@@ -428,6 +464,8 @@ public class FrPontos extends javax.swing.JFrame {
             p.setEstadoPonto(edEstado.getText());
             p.setContatoPonto(edContato.getText());
             p.setDescricaoPonto(edDescricao.getText());
+            p.setCepPonto(edCep.getText());
+            
             pd.update(p);
             fm.readJTable();
             this.dispose();
@@ -479,6 +517,14 @@ public class FrPontos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void btSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btSalvar1ActionPerformed
+
+    private void edRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edRuaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edRuaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -522,6 +568,8 @@ public class FrPontos extends javax.swing.JFrame {
     private javax.swing.JButton btAlterar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JButton btSalvar1;
+    private javax.swing.JFormattedTextField edCep;
     private javax.swing.JTextField edCidade;
     private javax.swing.JLabel edCodigo;
     private javax.swing.JFormattedTextField edContato;
@@ -534,6 +582,7 @@ public class FrPontos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

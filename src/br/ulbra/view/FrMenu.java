@@ -43,7 +43,8 @@ public class FrMenu extends javax.swing.JFrame {
                 p.getCidadePonto(),
                 p.getEstadoPonto(),
                 p.getContatoPonto(),
-                p.getDescricaoPonto()
+                p.getDescricaoPonto(),
+                p.getCepPonto()
             });
         }
     }
@@ -61,7 +62,8 @@ public class FrMenu extends javax.swing.JFrame {
                 p.getCidadePonto(),
                 p.getEstadoPonto(),
                 p.getContatoPonto(),
-                p.getDescricaoPonto()
+                p.getDescricaoPonto(),
+                p.getCepPonto()
             });
         }
     }
@@ -123,10 +125,10 @@ public class FrMenu extends javax.swing.JFrame {
         tbPontos.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         tbPontos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Cod", "Nome", "Rua", "Número", "Cidade", "Estado", "Contato", "Descrição"
+                "Cod", "Nome", "Rua", "Número", "Cidade", "Estado", "Contato", "Descrição", "CEP"
             }
         ));
         tbPontos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -314,6 +316,7 @@ public class FrMenu extends javax.swing.JFrame {
             p.getEdEstado().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 5).toString());
             p.getEdContato().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 6).toString());
             p.getEdDescricao().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 7).toString());
+            p.getEdCep().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 8).toString());
         }
     }//GEN-LAST:event_tbPontosMouseClicked
 
@@ -341,6 +344,7 @@ public class FrMenu extends javax.swing.JFrame {
         p.getEdEstado().setText("");
         p.getEdContato().setText("");
         p.getEdDescricao().setText("");
+        p.getEdCep().setText("");
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

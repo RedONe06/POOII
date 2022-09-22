@@ -11,6 +11,7 @@ public class Ponto {
     private String estadoPonto;
     private String contatoPonto;
     private String descricaoPonto;
+    private String cepPonto;
 
     public Ponto() {
     }
@@ -90,12 +91,22 @@ public class Ponto {
         this.descricaoPonto = descricaoPonto;
     }
 
+    public String getCepPonto() {
+        return cepPonto;
+    }
+
+    public void setCepPonto(String cepPonto) {
+        this.cepPonto = cepPonto;
+    }
+
     @Override
+
+    
     public String toString() {
-        return "Pontos{" + "idPonto=" + idPonto + ", nomePonto=" + nomePonto 
-                + ", ruaPonto=" + ruaPonto + ", numeroPonto=" + numeroPonto 
-                + ", cidadePonto=" + cidadePonto + ", estadoPonto=" 
-                + estadoPonto + ", contatoPonto=" + contatoPonto 
-                + ", descricaoPonto=" + descricaoPonto + '}';
+        return "Ponto{" + "idPonto=" + idPonto + ", nomePonto=" + nomePonto + ", ruaPonto=" 
+                + ruaPonto + ", numeroPonto=" + numeroPonto + ", cidadePonto=" + cidadePonto 
+                + ", estadoPonto=" + estadoPonto + ", contatoPonto=" + contatoPonto 
+                + ", descricaoPonto=" + descricaoPonto + ", cepPonto=" + cepPonto + '}';
+    
     }   
 }

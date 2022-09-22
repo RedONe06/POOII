@@ -520,7 +520,6 @@ public class FrUsuario extends javax.swing.JFrame {
     }
 
     private boolean ehEmailValido(String email) {
-        JOptionPane.showMessageDialog(null, useRegex(email));
         if (useRegex(email)) {
             return true;
         } else {
