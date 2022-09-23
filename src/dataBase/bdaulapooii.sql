@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23-Set-2022 às 00:46
+-- Tempo de geração: 24-Set-2022 às 01:37
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.6
 
@@ -33,7 +33,7 @@ CREATE TABLE `tbpontos` (
   `idPonto` int(11) NOT NULL,
   `nomePonto` varchar(255) DEFAULT NULL,
   `ruaPonto` varchar(200) DEFAULT NULL,
-  `numeroPonto` int(11) DEFAULT NULL,
+  `numeroPonto` varchar(100) DEFAULT NULL,
   `cidadePonto` varchar(100) DEFAULT NULL,
   `estadoPonto` varchar(255) DEFAULT NULL,
   `contatoPonto` varchar(100) DEFAULT NULL,
@@ -45,10 +45,10 @@ CREATE TABLE `tbpontos` (
 -- Extraindo dados da tabela `tbpontos`
 --
 
-INSERT INTO `tbpontos` (`idPonto`, `nomePonto`, `ruaPonto`, `numeroPonto`, `cidadePonto`, `estadoPonto`, `contatoPonto`, `descricaoPonto`, `cepPonto`) VALUES(1, 'asd', 'asd', 12, 'afawsdgf', 'asdf', 'asdf', 'asdf', NULL);
-INSERT INTO `tbpontos` (`idPonto`, `nomePonto`, `ruaPonto`, `numeroPonto`, `cidadePonto`, `estadoPonto`, `contatoPonto`, `descricaoPonto`, `cepPonto`) VALUES(2, 'Praça General Freitas', 'AV Sapucaia', 2000, 'Sapucaia do Sul', 'RS', '6355456546', 'Praça', NULL);
-INSERT INTO `tbpontos` (`idPonto`, `nomePonto`, `ruaPonto`, `numeroPonto`, `cidadePonto`, `estadoPonto`, `contatoPonto`, `descricaoPonto`, `cepPonto`) VALUES(3, 'Cascata do Chuvisquerio', 'Estrada Geral do Chuvisqueiro', 0, 'Riozinho', 'RS', '5465454545', 'Cascata e atração turistica', NULL);
-INSERT INTO `tbpontos` (`idPonto`, `nomePonto`, `ruaPonto`, `numeroPonto`, `cidadePonto`, `estadoPonto`, `contatoPonto`, `descricaoPonto`, `cepPonto`) VALUES(4, 'Sitio Recanto dos Prazeres', 'Av Justino Camboim', 5420, 'Sapucaia do Sul', 'RS', '5118464551', 'Sitio', '93200000');
+INSERT INTO `tbpontos` (`idPonto`, `nomePonto`, `ruaPonto`, `numeroPonto`, `cidadePonto`, `estadoPonto`, `contatoPonto`, `descricaoPonto`, `cepPonto`) VALUES(1, 'asd', 'asd', '12', 'afawsdgf', 'asdf', 'asdf', 'asdf', NULL);
+INSERT INTO `tbpontos` (`idPonto`, `nomePonto`, `ruaPonto`, `numeroPonto`, `cidadePonto`, `estadoPonto`, `contatoPonto`, `descricaoPonto`, `cepPonto`) VALUES(2, 'Praça General Freitas', 'AV Sapucaia', '2000', 'Sapucaia do Sul', 'RS', '6355456546', 'Praça', NULL);
+INSERT INTO `tbpontos` (`idPonto`, `nomePonto`, `ruaPonto`, `numeroPonto`, `cidadePonto`, `estadoPonto`, `contatoPonto`, `descricaoPonto`, `cepPonto`) VALUES(3, 'Cascata do Chuvisquerio', 'Estrada Geral do Chuvisqueiro', '0', 'Riozinho', 'RS', '5465454545', 'Cascata e atração turistica', NULL);
+INSERT INTO `tbpontos` (`idPonto`, `nomePonto`, `ruaPonto`, `numeroPonto`, `cidadePonto`, `estadoPonto`, `contatoPonto`, `descricaoPonto`, `cepPonto`) VALUES(4, 'Sitio Recanto dos Prazeres', 'Av Justino Camboim', '5420', 'Sapucaia do Sul', 'RS', '5118464551', 'Sitio', '93200000');
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,7 @@ CREATE TABLE `tbusuario` (
   `bairroUsu` varchar(255) DEFAULT NULL,
   `cidadeUsu` varchar(255) DEFAULT NULL,
   `estadoUsu` varchar(255) DEFAULT NULL,
-  `numeroUsu` int(11) DEFAULT NULL
+  `numeroUsu` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -86,7 +86,7 @@ INSERT INTO `tbusuario` (`idUsu`, `nomeUsu`, `emailUsu`, `senhaUsu`, `foneUsu`, 
 INSERT INTO `tbusuario` (`idUsu`, `nomeUsu`, `emailUsu`, `senhaUsu`, `foneUsu`, `sexoUsu`, `cepUsu`, `logradouroUsu`, `bairroUsu`, `cidadeUsu`, `estadoUsu`, `numeroUsu`) VALUES(9, 'grtrfg ', 'dassc', '123', '(  )      -    ', 2, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `tbusuario` (`idUsu`, `nomeUsu`, `emailUsu`, `senhaUsu`, `foneUsu`, `sexoUsu`, `cepUsu`, `logradouroUsu`, `bairroUsu`, `cidadeUsu`, `estadoUsu`, `numeroUsu`) VALUES(10, 'aaa', 'pri', 'a', '(55)5 5555-5555', 2, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `tbusuario` (`idUsu`, `nomeUsu`, `emailUsu`, `senhaUsu`, `foneUsu`, `sexoUsu`, `cepUsu`, `logradouroUsu`, `bairroUsu`, `cidadeUsu`, `estadoUsu`, `numeroUsu`) VALUES(11, 'dfdsf', 'pri@a.cm', 'ee', '(33)3 3333-3333', 3, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tbusuario` (`idUsu`, `nomeUsu`, `emailUsu`, `senhaUsu`, `foneUsu`, `sexoUsu`, `cepUsu`, `logradouroUsu`, `bairroUsu`, `cidadeUsu`, `estadoUsu`, `numeroUsu`) VALUES(12, 'eleirdna', 'aaaa@g.cm', '123', '(65)4 6245-4654', 2, '34536365215', 'asfgasdfg', 'alsidjfhasdf', 'afgasfdg', 'asdf', 12);
+INSERT INTO `tbusuario` (`idUsu`, `nomeUsu`, `emailUsu`, `senhaUsu`, `foneUsu`, `sexoUsu`, `cepUsu`, `logradouroUsu`, `bairroUsu`, `cidadeUsu`, `estadoUsu`, `numeroUsu`) VALUES(12, 'eleirdna', 'aaaa@g.cm', '123', '(65)4 6245-4654', 2, '34536365215', 'asfgasdfg', 'alsidjfhasdf', 'afgasfdg', 'asdf', '12');
 
 --
 -- Índices para tabelas despejadas

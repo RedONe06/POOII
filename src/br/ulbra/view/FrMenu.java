@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ulbra.view;
 
 import br.ulbra.DAO.PontoDAO;
-import br.ulbra.DAO.UsuarioDAO;
 import br.ulbra.entity.Ponto;
-import br.ulbra.entity.Usuario;
 import br.ulbra.view.FrPontos;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Priscila Butzke
+ * @author Priscila Butzke & Andriele Joras
  */
 public class FrMenu extends javax.swing.JFrame {
 
@@ -79,11 +72,16 @@ public class FrMenu extends javax.swing.JFrame {
             modelo.addRow(new Object[]{
                 p.getIdPonto(),
                 p.getNomePonto(),
-                p.getContatoPonto(),
+                p.getRuaPonto(),
+                p.getNumeroPonto(),
                 p.getCidadePonto(),
-                p.getEstadoPonto()
+                p.getEstadoPonto(),
+                p.getContatoPonto(),
+                p.getDescricaoPonto(),
+                p.getCepPonto()
             });
-        }System.out.println("fora do for");
+        }
+        System.out.println("fora do for");
     }
 
     public void visualizarPesquisaContato(List<Ponto> listaDeResposta) throws SQLException {
@@ -326,13 +324,19 @@ public class FrMenu extends javax.swing.JFrame {
                     visualizarPesquisaCompleta(pd.pesquisarPorNome(edPesquisa.getText()));
                     break;
                 case 1:
-                    visualizarPesquisaLocal(pd.pesquisarPorLocal( "estadoPonto",edPesquisa.getText()));
+                    visualizarPesquisaLocal(pd.pesquisarPorLocal("estadoPonto", edPesquisa.getText()));
                     break;
                 case 2:
-                    visualizarPesquisaLocal(pd.pesquisarPorLocal("cidadePonto",edPesquisa.getText() ));
+                    visualizarPesquisaLocal(pd.pesquisarPorLocal("cidadePonto", edPesquisa.getText()));
                     break;
                 case 3:
                     visualizarPesquisaContato(pd.pesquisarPorContato(edPesquisa.getText()));
+                    break;
+                case 4:
+                    visualizarPesquisaCompleta(pd.readOrdemAlfabetica(""));
+                    break;
+                case 5:
+                    visualizarPesquisaCompleta(pd.readOrdemAlfabetica("desc"));
                     break;
             }
         } catch (SQLException ex) {

@@ -17,14 +17,14 @@ public class Usuario {
     private String bairroUsu;
     private String cidadeUsu;
     private String estadoUsu;
-    private int numeroUsu;
+    private String numeroUsu;
     
     public Usuario() {
     }
 
     public Usuario(int idUsu, String nomeUsu, String emailUsu, String senhaUsu,
             String foneUsu, int sexoUsu, String cepUsu, String logradouroUsu,
-            String bairroUsu, String cidadeUsu, String estadoUsu, int numeroUsu) {
+            String bairroUsu, String cidadeUsu, String estadoUsu, String numeroUsu) {
         this.idUsu = idUsu;
         this.nomeUsu = nomeUsu;
         this.emailUsu = emailUsu;
@@ -127,11 +127,11 @@ public class Usuario {
         this.estadoUsu = estadoUsu;
     }
 
-    public int getNumeroUsu() {
+    public String getNumeroUsu() {
         return numeroUsu;
     }
 
-    public void setNumeroUsu(int numeroUsu) {
+    public void setNumeroUsu(String numeroUsu) {
         this.numeroUsu = numeroUsu;
     }
 

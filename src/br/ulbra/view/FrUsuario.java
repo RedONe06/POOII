@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ulbra.view;
 
 import br.ulbra.DAO.UsuarioDAO;
@@ -17,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Priscila Butzke
+ * @author Priscila Butzke e Andriele Joras
  */
 public class FrUsuario extends javax.swing.JFrame {
 
@@ -560,7 +555,7 @@ public class FrUsuario extends javax.swing.JFrame {
                 u.setBairroUsu(edBairro.getText());
                 u.setCidadeUsu(edCidade.getText());
                 u.setEstadoUsu(edEstado.getText());
-                u.setNumeroUsu(Integer.parseInt(edNumero.getText()));
+                u.setNumeroUsu(edNumero.getText());
 
                 if (rbM.isSelected()) {
                     u.setSexoUsu(1);
@@ -603,7 +598,7 @@ public class FrUsuario extends javax.swing.JFrame {
             u.setBairroUsu(edBairro.getText());
             u.setCidadeUsu(edCidade.getText());
             u.setEstadoUsu(edEstado.getText());
-            u.setNumeroUsu(Integer.parseInt(edNumero.getText()));
+            u.setNumeroUsu(edNumero.getText());
 
             if (rbM.isSelected()) {
                 u.setSexoUsu(1);

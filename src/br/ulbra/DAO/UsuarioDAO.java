@@ -10,8 +10,6 @@ import javax.swing.JOptionPane;
 import br.ulbra.entity.Usuario;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UsuarioDAO {
 
@@ -71,7 +69,7 @@ public class UsuarioDAO {
             stmt.setString(8, u.getBairroUsu());
             stmt.setString(9, u.getCidadeUsu());
             stmt.setString(10, u.getEstadoUsu());
-            stmt.setInt(11, u.getNumeroUsu());
+            stmt.setString(11, u.getNumeroUsu());
             
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Usuário Salvo com sucesso!");
@@ -122,7 +120,7 @@ public class UsuarioDAO {
             stmt.setString(8, u.getBairroUsu());
             stmt.setString(9, u.getCidadeUsu());
             stmt.setString(10, u.getEstadoUsu());
-            stmt.setInt(11, u.getNumeroUsu());
+            stmt.setString(11, u.getNumeroUsu());
             stmt.setInt(12, u.getIdUsu());
 
             stmt.executeUpdate();
@@ -158,7 +156,7 @@ public class UsuarioDAO {
                 usuario.setBairroUsu(rs.getString("bairroUsu"));
                 usuario.setCidadeUsu(rs.getString("cidadeUsu"));
                 usuario.setEstadoUsu(rs.getString("estadoUsu"));
-                usuario.setNumeroUsu(rs.getInt("numeroUsu"));
+                usuario.setNumeroUsu(rs.getString("numeroUsu"));
                 
                 usuarios.add(usuario);
             }
@@ -197,7 +195,7 @@ public class UsuarioDAO {
                 usuario.setBairroUsu(rs.getString("bairroUsu"));
                 usuario.setCidadeUsu(rs.getString("cidadeUsu"));
                 usuario.setEstadoUsu(rs.getString("estadoUsu"));
-                usuario.setNumeroUsu(rs.getInt("numeroUsu"));
+                usuario.setNumeroUsu(rs.getString("numeroUsu"));
                 usuarios.add(usuario);
             }
             

@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Priscila Butzke
+ * @author Priscila Butzke e Andriele Joras
  */
 public class FrPontos extends javax.swing.JFrame {
 
@@ -162,7 +162,7 @@ public class FrPontos extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pnCad.setBackground(new java.awt.Color(51, 51, 51));
         pnCad.setForeground(new java.awt.Color(255, 129, 79));
@@ -423,7 +423,7 @@ public class FrPontos extends javax.swing.JFrame {
 
                 p.setNomePonto(edNome.getText());
                 p.setRuaPonto(edRua.getText());
-                p.setNumeroPonto(Integer.parseInt(edNumero.getText()));
+                p.setNumeroPonto(edNumero.getText());
                 p.setCidadePonto(edCidade.getText());
                 p.setEstadoPonto(edEstado.getText());
                 p.setContatoPonto(edContato.getText());
@@ -459,7 +459,7 @@ public class FrPontos extends javax.swing.JFrame {
 
             p.setNomePonto(edNome.getText());
             p.setRuaPonto(edRua.getText());
-            p.setNumeroPonto(Integer.parseInt(edNumero.getText()));
+            p.setNumeroPonto(edNumero.getText());
             p.setCidadePonto(edCidade.getText());
             p.setEstadoPonto(edEstado.getText());
             p.setContatoPonto(edContato.getText());

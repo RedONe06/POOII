@@ -6,7 +6,7 @@ public class Ponto {
     private int idPonto;
     private String nomePonto;
     private String ruaPonto;
-    private int numeroPonto;
+    private String numeroPonto;
     private String cidadePonto;
     private String estadoPonto;
     private String contatoPonto;
@@ -16,7 +16,7 @@ public class Ponto {
     public Ponto() {
     }
 
-    public Ponto(int idPonto, String nomePonto, String ruaPonto, int numeroPonto, String cidadePonto, String estadoPonto, String contatoPonto, String descricaoPonto) {
+    public Ponto(int idPonto, String nomePonto, String ruaPonto, String numeroPonto, String cidadePonto, String estadoPonto, String contatoPonto, String descricaoPonto) {
         this.idPonto = idPonto;
         this.nomePonto = nomePonto;
         this.ruaPonto = ruaPonto;
@@ -51,11 +51,11 @@ public class Ponto {
         this.ruaPonto = ruaPonto;
     }
 
-    public int getNumeroPonto() {
+    public String getNumeroPonto() {
         return numeroPonto;
     }
 
-    public void setNumeroPonto(int numeroPonto) {
+    public void setNumeroPonto(String numeroPonto) {
         this.numeroPonto = numeroPonto;
     }
 
