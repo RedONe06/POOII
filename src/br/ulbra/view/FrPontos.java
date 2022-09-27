@@ -489,7 +489,7 @@ public class FrPontos extends javax.swing.JFrame {
                 p.setDescricaoPonto(edDescricao.getText());
                 p.setCepPonto(edCep.getText());
 
-                pd.create(p);
+                pd.criar(p);
                 this.dispose();
                 fm.readJTable();
             } else {

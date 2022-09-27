@@ -43,11 +43,8 @@ public class UsuarioDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
-
         return check;
     }
-    
-    
 
     public void create(Usuario u) {
         

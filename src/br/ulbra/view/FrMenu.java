@@ -30,7 +30,7 @@ public class FrMenu extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) tbPontos.getModel();
         modelo.setNumRows(0);
         PontoDAO pdao = new PontoDAO();
-        for (Ponto p : pdao.read()) {
+        for (Ponto p : pdao.atualizarTabela()) {
             modelo.addRow(new Object[]{
                 p.getIdPonto(),
                 p.getNomePonto(),
@@ -343,10 +343,10 @@ public class FrMenu extends javax.swing.JFrame {
                     visualizarPesquisaContato(pd.pesquisarPorContato(edPesquisa.getText()));
                     break;
                 case 4:
-                    visualizarPesquisaCompleta(pd.readOrdemAlfabetica(""));
+                    visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica(""));
                     break;
                 case 5:
-                    visualizarPesquisaCompleta(pd.readOrdemAlfabetica("desc"));
+                    visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica("desc"));
                     break;
             }
         } catch (SQLException ex) {
@@ -448,10 +448,10 @@ public class FrMenu extends javax.swing.JFrame {
                         visualizarPesquisaContato(pd.pesquisarPorContato(edPesquisa.getText()));
                         break;
                     case 4:
-                        visualizarPesquisaCompleta(pd.readOrdemAlfabetica(""));
+                        visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica(""));
                         break;
                     case 5:
-                        visualizarPesquisaCompleta(pd.readOrdemAlfabetica("desc"));
+                        visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica("desc"));
                         break;
                 }
             } catch (SQLException ex) {
