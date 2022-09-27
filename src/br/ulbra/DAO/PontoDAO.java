@@ -72,7 +72,7 @@ public class PontoDAO {
 
         try {
             stmt = con.prepareStatement("UPDATE tbpontos SET nomePonto =  ?, ruaPonto = ?, numeroPonto =  ?, "
-                    + "cidadePonto =  ?, estadoPonto =  ?, contatoPonto = ?, descricaoPonto = ?, cepPonto = ? WHERE  idPonto = ?");
+                    + "cidadePonto =  ?, estadoPonto =  ?, contatoPonto = ?, descricaoPonto = ?, cepPonto = ? WHERE idPonto = ?");
 
             stmt.setString(1, p.getNomePonto());
             stmt.setString(2, p.getRuaPonto());
@@ -81,9 +81,10 @@ public class PontoDAO {
             stmt.setString(5, p.getEstadoPonto());
             stmt.setString(6, p.getContatoPonto());
             stmt.setString(7, p.getDescricaoPonto());
-            stmt.setInt(8, p.getIdPonto());
-            stmt.setString(9, p.getCepPonto());
+            stmt.setString(8, p.getCepPonto());
+            stmt.setInt(9, p.getIdPonto());
 
+            JOptionPane.showMessageDialog(null, stmt);
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
 
@@ -98,14 +99,14 @@ public class PontoDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Ponto> pontos = new ArrayList<>();
-        
+
         System.out.println("Vai entrar no try");
 
         try {
 
             if (tipoOrdem.equals("desc")) {
                 stmt = con.prepareStatement("SELECT * FROM tbpontos ORDER BY nomePonto DESC");
-                
+
             } else {
                 stmt = con.prepareStatement("SELECT * FROM tbpontos ORDER BY nomePonto");
             }
@@ -126,15 +127,15 @@ public class PontoDAO {
                 ponto.setCepPonto(rs.getString("cepPonto"));
 
                 pontos.add(ponto);
-               
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } catch(Exception ex){
+
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
-        
-        }finally {
+
+        } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
         return (ArrayList<Ponto>) pontos;
@@ -219,7 +220,6 @@ public class PontoDAO {
         ResultSet rs = null;
         ArrayList<Ponto> pontos = new ArrayList<>();
         String args = campoBd + " like '%" + pesquisa + "%'";
-        JOptionPane.showMessageDialog(null, args);
         try {
 
             stmt = con.prepareStatement("SELECT * FROM tbpontos WHERE " + args);
@@ -269,7 +269,7 @@ public class PontoDAO {
                 ponto.setIdPonto(rs.getInt("idPonto"));
                 ponto.setNomePonto(rs.getString("nomePonto"));
                 ponto.setContatoPonto(rs.getString("contatoPonto"));
-                 ponto.setRuaPonto("");
+                ponto.setRuaPonto("");
                 ponto.setNumeroPonto("");
                 ponto.setCidadePonto("");
                 ponto.setEstadoPonto("");

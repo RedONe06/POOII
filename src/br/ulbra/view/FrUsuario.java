@@ -2,6 +2,12 @@ package br.ulbra.view;
 
 import br.ulbra.DAO.UsuarioDAO;
 import br.ulbra.entity.Usuario;
+import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +44,42 @@ public class FrUsuario extends javax.swing.JFrame {
         }
         this.pack();
     }
+    
+    public void buscarCep(String cep) {
+        String json;
+
+        try {
+            URL url = new URL("http://viacep.com.br/ws/" + cep + "/json");
+            URLConnection urlConnection = url.openConnection();
+            InputStream is = urlConnection.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            StringBuilder jsonSb = new StringBuilder();
+
+            br.lines().forEach(l -> jsonSb.append(l.trim()));
+            json = jsonSb.toString();
+
+
+            json = json.replaceAll("[{},:]", "");
+            json = json.replaceAll("\"", "\n");
+            String array[] = new String[30];
+            array = json.split("\n");
+
+            String logradouro = array[7];
+            String bairro = array[15];
+            String cidade = array[19];
+            String uf = array[23];
+
+            edLogradouro.setText(logradouro);
+            edBairro.setText(bairro);
+            edCidade.setText(cidade);
+            edEstado.setText(uf);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Cep não encontrado.");
+        }
+    }       
+
 
     /**
      * Creates new form FrCadastro
@@ -131,7 +173,6 @@ public class FrUsuario extends javax.swing.JFrame {
         edSenha1 = new javax.swing.JPasswordField();
         edFone = new javax.swing.JFormattedTextField();
         edCod = new javax.swing.JLabel();
-        edCep = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         edLogradouro = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -148,6 +189,7 @@ public class FrUsuario extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        edCep = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -184,7 +226,6 @@ public class FrUsuario extends javax.swing.JFrame {
         });
 
         edPesquisa.setBackground(new java.awt.Color(204, 204, 204));
-        edPesquisa.setForeground(new java.awt.Color(0, 0, 0));
         edPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edPesquisaActionPerformed(evt);
@@ -271,6 +312,7 @@ public class FrUsuario extends javax.swing.JFrame {
         jLabel7.setText("SEXO");
         pnCad.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, 30));
 
+        rbM.setBackground(new java.awt.Color(51, 51, 51));
         buttonGroup1.add(rbM);
         rbM.setFont(new java.awt.Font("Yu Gothic UI", 1, 12)); // NOI18N
         rbM.setForeground(new java.awt.Color(255, 255, 255));
@@ -282,12 +324,14 @@ public class FrUsuario extends javax.swing.JFrame {
         });
         pnCad.add(rbM, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, -1));
 
+        rbF.setBackground(new java.awt.Color(51, 51, 51));
         buttonGroup1.add(rbF);
         rbF.setFont(new java.awt.Font("Yu Gothic UI", 1, 12)); // NOI18N
         rbF.setForeground(new java.awt.Color(255, 255, 255));
         rbF.setText("FEMININO");
         pnCad.add(rbF, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
 
+        rbO.setBackground(new java.awt.Color(51, 51, 51));
         buttonGroup1.add(rbO);
         rbO.setFont(new java.awt.Font("Yu Gothic UI", 1, 12)); // NOI18N
         rbO.setForeground(new java.awt.Color(255, 255, 255));
@@ -300,12 +344,10 @@ public class FrUsuario extends javax.swing.JFrame {
         pnCad.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, -1, -1));
 
         edSenha2.setBackground(new java.awt.Color(204, 204, 204));
-        edSenha2.setForeground(new java.awt.Color(0, 0, 0));
         edSenha2.setCaretColor(new java.awt.Color(153, 153, 0));
         pnCad.add(edSenha2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, 160, 30));
 
         edNome.setBackground(new java.awt.Color(204, 204, 204));
-        edNome.setForeground(new java.awt.Color(0, 0, 0));
         edNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edNomeActionPerformed(evt);
@@ -314,7 +356,6 @@ public class FrUsuario extends javax.swing.JFrame {
         pnCad.add(edNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 320, 30));
 
         edEmail.setBackground(new java.awt.Color(204, 204, 204));
-        edEmail.setForeground(new java.awt.Color(0, 0, 0));
         pnCad.add(edEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 320, 30));
 
         btSalvar.setBackground(new java.awt.Color(0, 153, 102));
@@ -353,7 +394,6 @@ public class FrUsuario extends javax.swing.JFrame {
         pnCad.add(btExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 300, 40, 40));
 
         edSenha1.setBackground(new java.awt.Color(204, 204, 204));
-        edSenha1.setForeground(new java.awt.Color(0, 0, 0));
         pnCad.add(edSenha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 150, 30));
 
         edFone.setBackground(new java.awt.Color(204, 204, 204));
@@ -367,22 +407,12 @@ public class FrUsuario extends javax.swing.JFrame {
         edCod.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         pnCad.add(edCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 50, 30));
 
-        edCep.setBackground(new java.awt.Color(204, 204, 204));
-        edCep.setForeground(new java.awt.Color(0, 0, 0));
-        edCep.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edCepActionPerformed(evt);
-            }
-        });
-        pnCad.add(edCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 210, 30));
-
         jLabel10.setFont(new java.awt.Font("Yu Gothic UI", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("CONFIRMAR SENHA");
         pnCad.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, -1, -1));
 
         edLogradouro.setBackground(new java.awt.Color(204, 204, 204));
-        edLogradouro.setForeground(new java.awt.Color(0, 0, 0));
         edLogradouro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edLogradouroActionPerformed(evt);
@@ -396,7 +426,6 @@ public class FrUsuario extends javax.swing.JFrame {
         pnCad.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, -1, -1));
 
         edBairro.setBackground(new java.awt.Color(204, 204, 204));
-        edBairro.setForeground(new java.awt.Color(0, 0, 0));
         edBairro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edBairroActionPerformed(evt);
@@ -410,7 +439,6 @@ public class FrUsuario extends javax.swing.JFrame {
         pnCad.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, -1, 20));
 
         edCidade.setBackground(new java.awt.Color(204, 204, 204));
-        edCidade.setForeground(new java.awt.Color(0, 0, 0));
         edCidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edCidadeActionPerformed(evt);
@@ -429,7 +457,6 @@ public class FrUsuario extends javax.swing.JFrame {
         pnCad.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 220, -1, -1));
 
         edEstado.setBackground(new java.awt.Color(204, 204, 204));
-        edEstado.setForeground(new java.awt.Color(0, 0, 0));
         edEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edEstadoActionPerformed(evt);
@@ -438,7 +465,6 @@ public class FrUsuario extends javax.swing.JFrame {
         pnCad.add(edEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 240, 170, 30));
 
         edNumero.setBackground(new java.awt.Color(204, 204, 204));
-        edNumero.setForeground(new java.awt.Color(0, 0, 0));
         edNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edNumeroActionPerformed(evt);
@@ -457,6 +483,11 @@ public class FrUsuario extends javax.swing.JFrame {
         btBuscarCep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBuscarCepActionPerformed(evt);
+            }
+        });
+        btBuscarCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btBuscarCepKeyPressed(evt);
             }
         });
         pnCad.add(btBuscarCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 70, 110, 30));
@@ -478,6 +509,24 @@ public class FrUsuario extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(255, 102, 102));
         jLabel12.setText("Places");
         pnCad.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, -1, 20));
+
+        edCep.setBackground(new java.awt.Color(204, 204, 204));
+        try {
+            edCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        edCep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edCepActionPerformed(evt);
+            }
+        });
+        edCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edCepKeyPressed(evt);
+            }
+        });
+        pnCad.add(edCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 210, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -698,10 +747,6 @@ public class FrUsuario extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btExcluirActionPerformed
 
-    private void edCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edCepActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edCepActionPerformed
-
     private void edLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edLogradouroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edLogradouroActionPerformed
@@ -723,8 +768,22 @@ public class FrUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_edNumeroActionPerformed
 
     private void btBuscarCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCepActionPerformed
-        // TODO add your handling code here:
+        buscarCep(edCep.getText().replace("-", ""));
     }//GEN-LAST:event_btBuscarCepActionPerformed
+
+    private void btBuscarCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btBuscarCepKeyPressed
+        
+    }//GEN-LAST:event_btBuscarCepKeyPressed
+
+    private void edCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edCepActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edCepActionPerformed
+
+    private void edCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edCepKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarCep(edCep.getText().replace("-", ""));
+        }
+    }//GEN-LAST:event_edCepKeyPressed
 
     /**
      * @param args the command line arguments
@@ -774,7 +833,7 @@ public class FrUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btSalvar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField edBairro;
-    private javax.swing.JTextField edCep;
+    private javax.swing.JFormattedTextField edCep;
     private javax.swing.JTextField edCidade;
     private javax.swing.JLabel edCod;
     private javax.swing.JTextField edEmail;

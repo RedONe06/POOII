@@ -2,6 +2,13 @@ package br.ulbra.view;
 
 import br.ulbra.entity.Ponto;
 import br.ulbra.DAO.PontoDAO;
+import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +32,39 @@ public class FrPontos extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         FrMenu fm = new FrMenu();
         fm.readJTable();
+    }
+
+    public void buscarCep(String cep) {
+        String json;
+
+        try {
+            URL url = new URL("http://viacep.com.br/ws/" + cep + "/json");
+            URLConnection urlConnection = url.openConnection();
+            InputStream is = urlConnection.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            StringBuilder jsonSb = new StringBuilder();
+
+            br.lines().forEach(l -> jsonSb.append(l.trim()));
+            json = jsonSb.toString();
+
+            json = json.replaceAll("[{},:]", "");
+            json = json.replaceAll("\"", "\n");
+            String array[] = new String[30];
+            array = json.split("\n");
+
+            String logradouro = array[7];
+            String bairro = array[15];
+            String cidade = array[19];
+            String uf = array[23];
+
+            edRua.setText(logradouro);
+            edCidade.setText(bairro + " - " + cidade);
+            edEstado.setText(uf);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Cep não encontrado.");
+        }
     }
 
     public JLabel getEdCodigo() {
@@ -139,21 +179,21 @@ public class FrPontos extends javax.swing.JFrame {
         btAlterar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         edNumero = new javax.swing.JTextField();
         edCidade = new javax.swing.JTextField();
         edDescricao = new javax.swing.JTextField();
         edEstado = new javax.swing.JTextField();
-        edContato = new javax.swing.JFormattedTextField();
         edCodigo = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        edCep = new javax.swing.JFormattedTextField();
         jLabel14 = new javax.swing.JLabel();
-        btSalvar1 = new javax.swing.JButton();
+        btBuscarCep = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        edContato = new javax.swing.JFormattedTextField();
+        edCep = new javax.swing.JFormattedTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -194,7 +234,6 @@ public class FrPontos extends javax.swing.JFrame {
         pnCad.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
 
         edNome.setBackground(new java.awt.Color(204, 204, 204));
-        edNome.setForeground(new java.awt.Color(0, 0, 0));
         edNome.setBorder(null);
         edNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,7 +243,6 @@ public class FrPontos extends javax.swing.JFrame {
         pnCad.add(edNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 250, 30));
 
         edRua.setBackground(new java.awt.Color(204, 204, 204));
-        edRua.setForeground(new java.awt.Color(0, 0, 0));
         edRua.setBorder(null);
         edRua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,11 +290,6 @@ public class FrPontos extends javax.swing.JFrame {
         jLabel9.setText("DESCRICÃO");
         pnCad.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, 20));
 
-        jLabel10.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel10.setText("CIDADE");
-        pnCad.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
-
         jLabel11.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
         jLabel11.setText("CEP");
@@ -283,10 +316,6 @@ public class FrPontos extends javax.swing.JFrame {
         edEstado.setBackground(new java.awt.Color(204, 204, 204));
         edEstado.setBorder(null);
         pnCad.add(edEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 120, 30));
-
-        edContato.setBackground(new java.awt.Color(204, 204, 204));
-        edContato.setBorder(null);
-        pnCad.add(edContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 260, 30));
 
         edCodigo.setBackground(new java.awt.Color(204, 204, 204));
         edCodigo.setFont(new java.awt.Font("Yu Gothic Medium", 1, 18)); // NOI18N
@@ -321,24 +350,54 @@ public class FrPontos extends javax.swing.JFrame {
 
         pnCad.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 740, 20));
 
-        edCep.setBackground(new java.awt.Color(204, 204, 204));
-        edCep.setBorder(null);
-        pnCad.add(edCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 140, 30));
-
         jLabel14.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(204, 204, 204));
         jLabel14.setText("CONTATO");
         pnCad.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, -1, 20));
 
-        btSalvar1.setBackground(new java.awt.Color(0, 153, 102));
-        btSalvar1.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        btSalvar1.setText("BUSCAR CEP");
-        btSalvar1.addActionListener(new java.awt.event.ActionListener() {
+        btBuscarCep.setBackground(new java.awt.Color(0, 153, 102));
+        btBuscarCep.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        btBuscarCep.setText("BUSCAR CEP");
+        btBuscarCep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSalvar1ActionPerformed(evt);
+                btBuscarCepActionPerformed(evt);
             }
         });
-        pnCad.add(btSalvar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 110, 30));
+        pnCad.add(btBuscarCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 110, 30));
+
+        jLabel15.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel15.setText("BAIRRO - CIDADE");
+        pnCad.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+
+        edContato.setBackground(new java.awt.Color(204, 204, 204));
+        try {
+            edContato.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        pnCad.add(edContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 260, 30));
+
+        edCep.setBackground(new java.awt.Color(204, 204, 204));
+        try {
+            edCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        edCep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edCepActionPerformed(evt);
+            }
+        });
+        edCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edCepKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edCepKeyReleased(evt);
+            }
+        });
+        pnCad.add(edCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 140, 30));
 
         jMenuBar1.setMaximumSize(new java.awt.Dimension(200, 32769));
         jMenuBar1.setPreferredSize(new java.awt.Dimension(184, 26));
@@ -406,7 +465,7 @@ public class FrPontos extends javax.swing.JFrame {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
-          FrMenu fm = null;
+        FrMenu fm = null;
         try {
             fm = new FrMenu();
         } catch (SQLException ex) {
@@ -429,7 +488,7 @@ public class FrPontos extends javax.swing.JFrame {
                 p.setContatoPonto(edContato.getText());
                 p.setDescricaoPonto(edDescricao.getText());
                 p.setCepPonto(edCep.getText());
-                
+
                 pd.create(p);
                 this.dispose();
                 fm.readJTable();
@@ -445,8 +504,8 @@ public class FrPontos extends javax.swing.JFrame {
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
         controlarBtn(1);
-        
-          FrMenu fm = null;
+
+        FrMenu fm = null;
         try {
             fm = new FrMenu();
         } catch (SQLException ex) {
@@ -465,11 +524,13 @@ public class FrPontos extends javax.swing.JFrame {
             p.setContatoPonto(edContato.getText());
             p.setDescricaoPonto(edDescricao.getText());
             p.setCepPonto(edCep.getText());
-            
+            p.setIdPonto(Integer.parseInt(edCodigo.getText()));
+           
             pd.update(p);
+            JOptionPane.showMessageDialog(null, p);
             fm.readJTable();
             this.dispose();
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
 
@@ -477,14 +538,14 @@ public class FrPontos extends javax.swing.JFrame {
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         controlarBtn(1);
-        
-          FrMenu fm = null;
+
+        FrMenu fm = null;
         try {
             fm = new FrMenu();
         } catch (SQLException ex) {
             Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
         }
-          
+
         Ponto p = new Ponto();
         try {
             PontoDAO pd = new PontoDAO();
@@ -517,13 +578,29 @@ public class FrPontos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void btSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSalvar1ActionPerformed
+    private void btBuscarCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCepActionPerformed
+
+        buscarCep(edCep.getText().replace("-", ""));
+    }//GEN-LAST:event_btBuscarCepActionPerformed
 
     private void edRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edRuaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edRuaActionPerformed
+
+    private void edCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edCepActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edCepActionPerformed
+
+    private void edCepKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edCepKeyReleased
+
+    }//GEN-LAST:event_edCepKeyReleased
+
+    private void edCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edCepKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String cep = edCep.getText();
+            buscarCep(cep.replace("-", ""));
+        }
+    }//GEN-LAST:event_edCepKeyPressed
 
     /**
      * @param args the command line arguments
@@ -566,9 +643,9 @@ public class FrPontos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlterar;
+    private javax.swing.JButton btBuscarCep;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btSalvar;
-    private javax.swing.JButton btSalvar1;
     private javax.swing.JFormattedTextField edCep;
     private javax.swing.JTextField edCidade;
     private javax.swing.JLabel edCodigo;
@@ -578,11 +655,11 @@ public class FrPontos extends javax.swing.JFrame {
     private javax.swing.JTextField edNome;
     private javax.swing.JTextField edNumero;
     private javax.swing.JTextField edRua;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

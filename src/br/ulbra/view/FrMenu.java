@@ -3,10 +3,12 @@ package br.ulbra.view;
 import br.ulbra.DAO.PontoDAO;
 import br.ulbra.entity.Ponto;
 import br.ulbra.view.FrPontos;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -137,11 +139,15 @@ public class FrMenu extends javax.swing.JFrame {
         });
 
         edPesquisa.setBackground(new java.awt.Color(204, 204, 204));
-        edPesquisa.setForeground(new java.awt.Color(0, 0, 0));
         edPesquisa.setBorder(null);
         edPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edPesquisaActionPerformed(evt);
+            }
+        });
+        edPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edPesquisaKeyPressed(evt);
             }
         });
 
@@ -226,27 +232,31 @@ public class FrMenu extends javax.swing.JFrame {
                         .addComponent(BtnPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(liFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(234, 234, 234)))))
+                            .addComponent(liFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(liFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(37, 37, 37)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(liFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -371,7 +381,12 @@ public class FrMenu extends javax.swing.JFrame {
             p.getEdEstado().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 5).toString());
             p.getEdContato().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 6).toString());
             p.getEdDescricao().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 7).toString());
-            p.getEdCep().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 8).toString());
+            try {
+                p.getEdCep().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 8).toString());
+            } catch(Exception ex){
+                p.getEdCep().setText("");
+            }
+
         }
     }//GEN-LAST:event_tbPontosMouseClicked
 
@@ -414,6 +429,36 @@ public class FrMenu extends javax.swing.JFrame {
     private void liFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liFiltroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_liFiltroActionPerformed
+
+    private void edPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edPesquisaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            try { //nome estado cidade contato
+                PontoDAO pd = new PontoDAO();
+                switch (liFiltro.getSelectedIndex()) {
+                    case 0:
+                        visualizarPesquisaCompleta(pd.pesquisarPorNome(edPesquisa.getText()));
+                        break;
+                    case 1:
+                        visualizarPesquisaLocal(pd.pesquisarPorLocal("estadoPonto", edPesquisa.getText()));
+                        break;
+                    case 2:
+                        visualizarPesquisaLocal(pd.pesquisarPorLocal("cidadePonto", edPesquisa.getText()));
+                        break;
+                    case 3:
+                        visualizarPesquisaContato(pd.pesquisarPorContato(edPesquisa.getText()));
+                        break;
+                    case 4:
+                        visualizarPesquisaCompleta(pd.readOrdemAlfabetica(""));
+                        break;
+                    case 5:
+                        visualizarPesquisaCompleta(pd.readOrdemAlfabetica("desc"));
+                        break;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_edPesquisaKeyPressed
 
     /**
      * @param args the command line arguments
