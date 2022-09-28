@@ -1,19 +1,20 @@
 package br.ulbra.view;
 
 import br.ulbra.DAO.UsuarioDAO;
+import br.ulbra.entity.BuscadorDeCep;
 import br.ulbra.entity.Usuario;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,6 +22,119 @@ import javax.swing.table.DefaultTableModel;
  * @author Priscila Butzke e Andriele Joras
  */
 public class FrUsuario extends javax.swing.JFrame {
+
+    public FrUsuario() throws SQLException {
+        initComponents();
+        this.setLocationRelativeTo(null);//centraliza no centro da tela ao executar
+        controlarBtn(1);
+        UsuarioDAO ud = new UsuarioDAO();
+        visualizarPesquisaCompleta(ud.pesquisarTabela());
+        edCod.setEnabled(false);
+    }
+
+    public JTextField getEdBairro() {
+        return edBairro;
+    }
+
+    public void setEdBairro(JTextField edBairro) {
+        this.edBairro = edBairro;
+    }
+
+    public JFormattedTextField getEdCep() {
+        return edCep;
+    }
+
+    public void setEdCep(JFormattedTextField edCep) {
+        this.edCep = edCep;
+    }
+
+    public JTextField getEdCidade() {
+        return edCidade;
+    }
+
+    public void setEdCidade(JTextField edCidade) {
+        this.edCidade = edCidade;
+    }
+
+    public JLabel getEdCod() {
+        return edCod;
+    }
+
+    public void setEdCod(JLabel edCod) {
+        this.edCod = edCod;
+    }
+
+    public JTextField getEdEmail() {
+        return edEmail;
+    }
+
+    public void setEdEmail(JTextField edEmail) {
+        this.edEmail = edEmail;
+    }
+
+    public JTextField getEdEstado() {
+        return edEstado;
+    }
+
+    public void setEdEstado(JTextField edEstado) {
+        this.edEstado = edEstado;
+    }
+
+    public JFormattedTextField getEdFone() {
+        return edFone;
+    }
+
+    public void setEdFone(JFormattedTextField edFone) {
+        this.edFone = edFone;
+    }
+
+    public JTextField getEdLogradouro() {
+        return edLogradouro;
+    }
+
+    public void setEdLogradouro(JTextField edLogradouro) {
+        this.edLogradouro = edLogradouro;
+    }
+
+    public JTextField getEdNome() {
+        return edNome;
+    }
+
+    public void setEdNome(JTextField edNome) {
+        this.edNome = edNome;
+    }
+
+    public JTextField getEdNumero() {
+        return edNumero;
+    }
+
+    public void setEdNumero(JTextField edNumero) {
+        this.edNumero = edNumero;
+    }
+
+    public JTextField getEdPesquisa() {
+        return edPesquisa;
+    }
+
+    public void setEdPesquisa(JTextField edPesquisa) {
+        this.edPesquisa = edPesquisa;
+    }
+
+    public JPasswordField getEdSenha1() {
+        return edSenha1;
+    }
+
+    public void setEdSenha1(JPasswordField edSenha1) {
+        this.edSenha1 = edSenha1;
+    }
+
+    public JPasswordField getEdSenha2() {
+        return edSenha2;
+    }
+
+    public void setEdSenha2(JPasswordField edSenha2) {
+        this.edSenha2 = edSenha2;
+    }
 
     public void controlarBtn(int op) {
         switch (op) {
@@ -44,59 +158,11 @@ public class FrUsuario extends javax.swing.JFrame {
         }
         this.pack();
     }
-    
-    public void buscarCep(String cep) {
-        String json;
 
-        try {
-            URL url = new URL("http://viacep.com.br/ws/" + cep + "/json");
-            URLConnection urlConnection = url.openConnection();
-            InputStream is = urlConnection.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            StringBuilder jsonSb = new StringBuilder();
-
-            br.lines().forEach(l -> jsonSb.append(l.trim()));
-            json = jsonSb.toString();
-
-
-            json = json.replaceAll("[{},:]", "");
-            json = json.replaceAll("\"", "\n");
-            String array[] = new String[30];
-            array = json.split("\n");
-
-            String logradouro = array[7];
-            String bairro = array[15];
-            String cidade = array[19];
-            String uf = array[23];
-
-            edLogradouro.setText(logradouro);
-            edBairro.setText(bairro);
-            edCidade.setText(cidade);
-            edEstado.setText(uf);
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Cep não encontrado.");
-        }
-    }       
-
-
-    /**
-     * Creates new form FrCadastro
-     */
-    public FrUsuario() throws SQLException {
-        initComponents();
-        this.setLocationRelativeTo(null);//centraliza no centro da tela ao executar
-        controlarBtn(1);
-        readJTable();
-        edCod.setEnabled(false);
-    }
-
-    public void readJTable() throws SQLException {
+    public void visualizarPesquisaCompleta(List<Usuario> listaDeResposta) throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) tbUsuario.getModel();
         modelo.setNumRows(0);
-        UsuarioDAO udao = new UsuarioDAO();
-        for (Usuario p : udao.read()) {
+        listaDeResposta.forEach((p) -> {
             modelo.addRow(new Object[]{
                 p.getIdUsu(),
                 p.getNomeUsu(),
@@ -111,30 +177,16 @@ public class FrUsuario extends javax.swing.JFrame {
                 p.getEstadoUsu(),
                 p.getNumeroUsu()
             });
-        }
+        });
     }
 
-    public void readJTableForDesc(String nome) throws SQLException {
-        DefaultTableModel modelo
-                = (DefaultTableModel) tbUsuario.getModel();
-        modelo.setNumRows(0);
-        UsuarioDAO pdao = new UsuarioDAO();
-        for (Usuario p : pdao.readForDesc(nome)) {
-            modelo.addRow(new Object[]{
-                p.getIdUsu(),
-                p.getNomeUsu(),
-                p.getEmailUsu(),
-                p.getSenhaUsu(),
-                p.getFoneUsu(),
-                p.getSexoUsu(),
-                p.getCepUsu(),
-                p.getLogradouroUsu(),
-                p.getBairroUsu(),
-                p.getCidadeUsu(),
-                p.getEstadoUsu(),
-                p.getNumeroUsu()
-            });
-        }
+    public boolean useRegex(String input) {
+        // Compile regular expression
+        Pattern pattern = Pattern.compile("[a-zA-Z]+@[a-zA-Z]+\\.[a-zA-Z]+", Pattern.CASE_INSENSITIVE);
+        // Match regex against input
+        Matcher matcher = pattern.matcher(input);
+        // Use results...
+        return matcher.matches();
     }
 
     /**
@@ -153,7 +205,8 @@ public class FrUsuario extends javax.swing.JFrame {
         btNovo = new javax.swing.JButton();
         edPesquisa = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btPesquisa = new javax.swing.JButton();
+        liFiltro = new javax.swing.JComboBox<>();
         pnCad = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -236,12 +289,19 @@ public class FrUsuario extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Cadastro de Usuários");
 
-        jButton1.setBackground(new java.awt.Color(255, 102, 102));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/loupe_79257.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btPesquisa.setBackground(new java.awt.Color(255, 102, 102));
+        btPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/loupe_79257.png"))); // NOI18N
+        btPesquisa.setBorder(null);
+        btPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btPesquisaActionPerformed(evt);
+            }
+        });
+
+        liFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome(Padrão)", "Estado", "Cidade", "Contato", "(A-Z) Ordem alfábetica", "(Z-A) Ordem alfábetica" }));
+        liFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                liFiltroActionPerformed(evt);
             }
         });
 
@@ -252,17 +312,19 @@ public class FrUsuario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(liFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(37, 37, 37))
         );
         jPanel1Layout.setVerticalGroup(
@@ -275,9 +337,11 @@ public class FrUsuario extends javax.swing.JFrame {
                         .addGap(40, 40, 40))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(liFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -554,15 +618,41 @@ public class FrUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_edNomeActionPerformed
 
-    public boolean useRegex(String input) {
-        // Compile regular expression
-        Pattern pattern = Pattern.compile("[a-zA-Z]+@[a-zA-Z]+\\.[a-zA-Z]+", Pattern.CASE_INSENSITIVE);
-        // Match regex against input
-        Matcher matcher = pattern.matcher(input);
-        // Use results...
-        return matcher.matches();
-    }
 
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+
+        Usuario u = new Usuario();
+        boolean isComplete = !edNome.getText().isEmpty()
+                && !edEmail.getText().isEmpty()
+                && !edSenha1.getText().isEmpty()
+                && !edSenha2.getText().isEmpty()
+                && !edFone.getText().isEmpty();
+        
+        try {
+            UsuarioDAO ud = new UsuarioDAO();
+            if (isComplete) {
+                inserirNaEntity(u);
+
+                if (rbM.isSelected()) {
+                    u.setSexoUsu(1);
+                } else if (rbF.isSelected()) {
+                    u.setSexoUsu(2);
+                } else {
+                    u.setSexoUsu(3);
+                }
+
+                if (ehSenhaValida(edSenha1.getText(), edSenha2.getText()) && ehEmailValido(edEmail.getText())) {
+                    ud.create(u);
+                    controlarBtn(1);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btSalvarActionPerformed
     private boolean ehEmailValido(String email) {
         if (useRegex(email)) {
             return true;
@@ -584,51 +674,6 @@ public class FrUsuario extends javax.swing.JFrame {
         }
     }
 
-    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-
-        Usuario u = new Usuario();
-        try {
-            UsuarioDAO ud = new UsuarioDAO();
-            if (!edNome.getText().isEmpty()
-                    && !edEmail.getText().isEmpty()
-                    && !edSenha1.getText().isEmpty()
-                    && !edSenha2.getText().isEmpty()
-                    && !edFone.getText().isEmpty()) {
-
-                u.setNomeUsu(edNome.getText());
-                u.setEmailUsu(edEmail.getText());
-                u.setSenhaUsu(edSenha1.getText());
-                u.setFoneUsu(edFone.getText());
-                u.setCepUsu(edCep.getText());
-                u.setLogradouroUsu(edLogradouro.getText());
-                u.setBairroUsu(edBairro.getText());
-                u.setCidadeUsu(edCidade.getText());
-                u.setEstadoUsu(edEstado.getText());
-                u.setNumeroUsu(edNumero.getText());
-
-                if (rbM.isSelected()) {
-                    u.setSexoUsu(1);
-                } else if (rbF.isSelected()) {
-                    u.setSexoUsu(2);
-                } else {
-                    u.setSexoUsu(3);
-                }
-
-                if (ehSenhaValida(edSenha1.getText(), edSenha2.getText()) && ehEmailValido(edEmail.getText())) {
-                    ud.create(u);
-                    controlarBtn(1);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Preencha todos os campos");
-            }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
-        }
-
-
-    }//GEN-LAST:event_btSalvarActionPerformed
-
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
         controlarBtn(1);
 
@@ -636,18 +681,8 @@ public class FrUsuario extends javax.swing.JFrame {
         try {
             UsuarioDAO ud = new UsuarioDAO();
 
-            u.setNomeUsu(edNome.getText());
+            inserirNaEntity(u);
             u.setIdUsu(Integer.parseInt(edCod.getText()));
-            u.setEmailUsu(edEmail.getText());
-            u.setSenhaUsu(edSenha1.getText());
-            u.setSenhaUsu(edSenha2.getText());
-            u.setFoneUsu(edFone.getText());
-            u.setCepUsu(edCep.getText());
-            u.setLogradouroUsu(edLogradouro.getText());
-            u.setBairroUsu(edBairro.getText());
-            u.setCidadeUsu(edCidade.getText());
-            u.setEstadoUsu(edEstado.getText());
-            u.setNumeroUsu(edNumero.getText());
 
             if (rbM.isSelected()) {
                 u.setSexoUsu(1);
@@ -658,7 +693,7 @@ public class FrUsuario extends javax.swing.JFrame {
             }
             if (edSenha1.getText().equals(edSenha2.getText())) {
                 ud.update(u);
-                readJTable();
+                visualizarPesquisaCompleta(ud.pesquisarTabela());
             } else {
                 JOptionPane.showMessageDialog(null,
                         "Você inseriu senhas diferentes!");
@@ -667,22 +702,54 @@ public class FrUsuario extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
-
-
     }//GEN-LAST:event_btAlterarActionPerformed
-
+    private void inserirNaEntity(Usuario u) throws SQLException {
+        u.setNomeUsu(edNome.getText());
+        u.setEmailUsu(edEmail.getText());
+        u.setSenhaUsu(edSenha1.getText());
+        u.setSenhaUsu(edSenha2.getText());
+        u.setFoneUsu(edFone.getText());
+        u.setCepUsu(edCep.getText());
+        u.setLogradouroUsu(edLogradouro.getText());
+        u.setBairroUsu(edBairro.getText());
+        u.setCidadeUsu(edCidade.getText());
+        u.setEstadoUsu(edEstado.getText());
+        u.setNumeroUsu(edNumero.getText());
+    }
     private void edPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edPesquisaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edPesquisaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisaActionPerformed
+        realizarPesquisa();
+    }//GEN-LAST:event_btPesquisaActionPerformed
+    private void realizarPesquisa() {
         try {
-            readJTableForDesc(edPesquisa.getText());
+            UsuarioDAO ud = new UsuarioDAO();
+            switch (liFiltro.getSelectedIndex()) {
+                case 0:
+                    visualizarPesquisaCompleta(ud.pesquisarPorNome(edPesquisa.getText()));
+                    break;
+                case 1:
+                    visualizarPesquisaCompleta(ud.pesquisarPorLocal("estadoUsu", edPesquisa.getText()));
+                    break;
+                case 2:
+                    visualizarPesquisaCompleta(ud.pesquisarPorLocal("cidadeUsu", edPesquisa.getText()));
+                    break;
+                case 3:
+                    visualizarPesquisaCompleta(ud.pesquisarPorContato(edPesquisa.getText()));
+                    break;
+                case 4:
+                    visualizarPesquisaCompleta(ud.organizarEmOrdemAlfabetica(""));
+                    break;
+                case 5:
+                    visualizarPesquisaCompleta(ud.organizarEmOrdemAlfabetica("desc"));
+                    break;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
         controlarBtn(2);
 
@@ -739,7 +806,7 @@ public class FrUsuario extends javax.swing.JFrame {
             UsuarioDAO ud = new UsuarioDAO();
             u.setIdUsu(Integer.parseInt(edCod.getText()));
             ud.delete(u);
-            readJTable();
+            visualizarPesquisaCompleta(ud.pesquisarTabela());
 
         } catch (SQLException ex) {
             Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -768,11 +835,13 @@ public class FrUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_edNumeroActionPerformed
 
     private void btBuscarCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCepActionPerformed
-        buscarCep(edCep.getText().replace("-", ""));
+        BuscadorDeCep buscador = new BuscadorDeCep();
+        String cep = edCep.getText();
+        buscador.buscarCep(cep.replace("-", ""), getEdLogradouro(), getEdBairro(), getEdCidade(), getEdEstado());
     }//GEN-LAST:event_btBuscarCepActionPerformed
 
     private void btBuscarCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btBuscarCepKeyPressed
-        
+
     }//GEN-LAST:event_btBuscarCepKeyPressed
 
     private void edCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edCepActionPerformed
@@ -781,9 +850,15 @@ public class FrUsuario extends javax.swing.JFrame {
 
     private void edCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edCepKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            buscarCep(edCep.getText().replace("-", ""));
+            BuscadorDeCep buscador = new BuscadorDeCep();
+            String cep = edCep.getText();
+            buscador.buscarCep(cep.replace("-", ""), getEdLogradouro(), getEdBairro(), getEdCidade(), getEdEstado());
         }
     }//GEN-LAST:event_edCepKeyPressed
+
+    private void liFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_liFiltroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -830,6 +905,7 @@ public class FrUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btBuscarCep;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNovo;
+    private javax.swing.JButton btPesquisa;
     private javax.swing.JButton btSalvar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField edBairro;
@@ -845,7 +921,6 @@ public class FrUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField edPesquisa;
     private javax.swing.JPasswordField edSenha1;
     private javax.swing.JPasswordField edSenha2;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -865,6 +940,7 @@ public class FrUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> liFiltro;
     private javax.swing.JPanel pnCad;
     private javax.swing.JRadioButton rbF;
     private javax.swing.JRadioButton rbM;

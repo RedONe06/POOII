@@ -209,12 +209,9 @@ public class FrLogin extends javax.swing.JFrame {
 
     private void btlogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlogarActionPerformed
 
-   
-   
         try {
             UsuarioDAO dao = new UsuarioDAO();
             if (dao.checkLogin(edEmail.getText(), edSenha.getText())) {
-                
                 new FrMenu().setVisible(true);
                 this.dispose();
             } else {
@@ -223,13 +220,10 @@ public class FrLogin extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FrLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }//GEN-LAST:event_btlogarActionPerformed
 
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
         this.dispose();
-
     }//GEN-LAST:event_btFecharActionPerformed
 
     private void edEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edEmailActionPerformed

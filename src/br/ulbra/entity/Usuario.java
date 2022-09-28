@@ -1,9 +1,5 @@
 package br.ulbra.entity;
 
-/**
- *
- * @author
- */
 public class Usuario {
 
     private int idUsu;

@@ -2,13 +2,8 @@ package br.ulbra.view;
 
 import br.ulbra.entity.Ponto;
 import br.ulbra.DAO.PontoDAO;
-import java.awt.HeadlessException;
+import br.ulbra.entity.BuscadorDeCep;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,45 +21,15 @@ public class FrPontos extends javax.swing.JFrame {
 
     /**
      * Creates new form FrPontos
+     *
+     * @throws java.sql.SQLException
      */
     public FrPontos() throws SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
         FrMenu fm = new FrMenu();
-        fm.readJTable();
-    }
-
-    public void buscarCep(String cep) {
-        String json;
-
-        try {
-            URL url = new URL("http://viacep.com.br/ws/" + cep + "/json");
-            URLConnection urlConnection = url.openConnection();
-            InputStream is = urlConnection.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            StringBuilder jsonSb = new StringBuilder();
-
-            br.lines().forEach(l -> jsonSb.append(l.trim()));
-            json = jsonSb.toString();
-
-            json = json.replaceAll("[{},:]", "");
-            json = json.replaceAll("\"", "\n");
-            String array[] = new String[30];
-            array = json.split("\n");
-
-            String logradouro = array[7];
-            String bairro = array[15];
-            String cidade = array[19];
-            String uf = array[23];
-
-            edRua.setText(logradouro);
-            edCidade.setText(bairro + " - " + cidade);
-            edEstado.setText(uf);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Cep não encontrado.");
-        }
+        PontoDAO pd = new PontoDAO();
+        fm.visualizarPesquisaCompleta(pd.pesquisarTabela());
     }
 
     public JLabel getEdCodigo() {
@@ -73,6 +38,14 @@ public class FrPontos extends javax.swing.JFrame {
 
     public void setEdCodigo(JLabel edCodigo) {
         this.edCodigo = edCodigo;
+    }
+
+    public JTextField getEdBairro() {
+        return edBairro;
+    }
+
+    public void setEdBairro(JTextField edBairro) {
+        this.edBairro = edBairro;
     }
 
     public JFormattedTextField getEdContato() {
@@ -194,6 +167,8 @@ public class FrPontos extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         edContato = new javax.swing.JFormattedTextField();
         edCep = new javax.swing.JFormattedTextField();
+        edBairro = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -301,7 +276,7 @@ public class FrPontos extends javax.swing.JFrame {
 
         edCidade.setBackground(new java.awt.Color(204, 204, 204));
         edCidade.setBorder(null);
-        pnCad.add(edCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 250, 30));
+        pnCad.add(edCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 120, 30));
 
         edDescricao.setBackground(new java.awt.Color(204, 204, 204));
         edDescricao.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -367,8 +342,8 @@ public class FrPontos extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel15.setText("BAIRRO - CIDADE");
-        pnCad.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+        jLabel15.setText("CIDADE");
+        pnCad.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
 
         edContato.setBackground(new java.awt.Color(204, 204, 204));
         try {
@@ -398,6 +373,20 @@ public class FrPontos extends javax.swing.JFrame {
             }
         });
         pnCad.add(edCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 140, 30));
+
+        edBairro.setBackground(new java.awt.Color(204, 204, 204));
+        edBairro.setBorder(null);
+        edBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edBairroActionPerformed(evt);
+            }
+        });
+        pnCad.add(edBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 120, 30));
+
+        jLabel16.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel16.setText("BAIRRO");
+        pnCad.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
         jMenuBar1.setMaximumSize(new java.awt.Dimension(200, 32769));
         jMenuBar1.setPreferredSize(new java.awt.Dimension(184, 26));
@@ -466,94 +455,82 @@ public class FrPontos extends javax.swing.JFrame {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
         FrMenu fm = null;
+        Ponto p = new Ponto();
+        boolean isComplete = !edNome.getText().isEmpty()
+                && !edRua.getText().isEmpty()
+                && !edDescricao.getText().isEmpty()
+                && !edCidade.getText().isEmpty()
+                && !edDescricao.getText().isEmpty();
+
         try {
             fm = new FrMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Ponto p = new Ponto();
-        try {
             PontoDAO pd = new PontoDAO();
-            if (!edNome.getText().isEmpty()
-                    && !edRua.getText().isEmpty()
-                    && !edDescricao.getText().isEmpty()
-                    && !edCidade.getText().isEmpty()
-                    && !edDescricao.getText().isEmpty()) {
-
-                p.setNomePonto(edNome.getText());
-                p.setRuaPonto(edRua.getText());
-                p.setNumeroPonto(edNumero.getText());
-                p.setCidadePonto(edCidade.getText());
-                p.setEstadoPonto(edEstado.getText());
-                p.setContatoPonto(edContato.getText());
-                p.setDescricaoPonto(edDescricao.getText());
-                p.setCepPonto(edCep.getText());
-
-                pd.criar(p);
+            if (isComplete) {
+                inserirNaEntity(p);
+                pd.create(p);
                 this.dispose();
-                fm.readJTable();
+                fm.visualizarPesquisaCompleta(pd.pesquisarTabela());
             } else {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos");
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+        } finally {
+            controlarBtn(1);
         }
-
-        controlarBtn(1);
     }//GEN-LAST:event_btSalvarActionPerformed
 
+
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
-        controlarBtn(1);
 
         FrMenu fm = null;
+        Ponto p = new Ponto();
+        controlarBtn(1);
+
         try {
             fm = new FrMenu();
+            PontoDAO pd = new PontoDAO();
+            inserirNaEntity(p);
+            p.setIdPonto(Integer.parseInt(edCodigo.getText()));
+            pd.update(p);
+            fm.visualizarPesquisaCompleta(pd.pesquisarTabela());
+            this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Ponto p = new Ponto();
-        try {
-            PontoDAO pd = new PontoDAO();
-
-            p.setNomePonto(edNome.getText());
-            p.setRuaPonto(edRua.getText());
-            p.setNumeroPonto(edNumero.getText());
-            p.setCidadePonto(edCidade.getText());
-            p.setEstadoPonto(edEstado.getText());
-            p.setContatoPonto(edContato.getText());
-            p.setDescricaoPonto(edDescricao.getText());
-            p.setCepPonto(edCep.getText());
-            p.setIdPonto(Integer.parseInt(edCodigo.getText()));
-           
-            pd.update(p);
-            JOptionPane.showMessageDialog(null, p);
-            fm.readJTable();
-            this.dispose();
-        } catch (HeadlessException | SQLException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btAlterarActionPerformed
+    private void inserirNaEntity(Ponto p) throws SQLException {
+        p.setNomePonto(edNome.getText());
+        p.setRuaPonto(edRua.getText());
+        p.setNumeroPonto(edNumero.getText());
+        p.setCidadePonto(edCidade.getText());
+        p.setEstadoPonto(edEstado.getText());
+        p.setContatoPonto(edContato.getText());
+        p.setDescricaoPonto(edDescricao.getText());
+        p.setCepPonto(edCep.getText());
+        p.setBairroPonto(edBairro.getText());
+    }
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        
         controlarBtn(1);
-
         FrMenu fm = null;
+        Ponto p = new Ponto();
+        
         try {
             fm = new FrMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Ponto p = new Ponto();
-        try {
             PontoDAO pd = new PontoDAO();
             p.setIdPonto(Integer.parseInt(edCodigo.getText()));
             pd.delete(p);
-            fm.readJTable();
+            fm.visualizarPesquisaCompleta(pd.pesquisarTabela());
             this.dispose();
         } catch (SQLException ex) {
+            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btExcluirActionPerformed
@@ -579,8 +556,9 @@ public class FrPontos extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void btBuscarCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCepActionPerformed
-
-        buscarCep(edCep.getText().replace("-", ""));
+        BuscadorDeCep buscador = new BuscadorDeCep();
+        String cep = edCep.getText();
+        buscador.buscarCep(cep.replace("-", ""), getEdRua(), getEdBairro(), getEdCidade(), getEdEstado());
     }//GEN-LAST:event_btBuscarCepActionPerformed
 
     private void edRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edRuaActionPerformed
@@ -596,11 +574,17 @@ public class FrPontos extends javax.swing.JFrame {
     }//GEN-LAST:event_edCepKeyReleased
 
     private void edCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edCepKeyPressed
+        BuscadorDeCep buscador = new BuscadorDeCep();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String cep = edCep.getText();
-            buscarCep(cep.replace("-", ""));
+            buscador.buscarCep(cep.replace("-", ""), getEdRua(), getEdBairro(), getEdCidade(), getEdEstado());
+            //buscarCep(cep.replace("-", ""));
         }
     }//GEN-LAST:event_edCepKeyPressed
+
+    private void edBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edBairroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edBairroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -646,6 +630,7 @@ public class FrPontos extends javax.swing.JFrame {
     private javax.swing.JButton btBuscarCep;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JTextField edBairro;
     private javax.swing.JFormattedTextField edCep;
     private javax.swing.JTextField edCidade;
     private javax.swing.JLabel edCodigo;
@@ -660,6 +645,7 @@ public class FrPontos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

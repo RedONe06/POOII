@@ -12,6 +12,7 @@ public class Ponto {
     private String contatoPonto;
     private String descricaoPonto;
     private String cepPonto;
+    private String bairroPonto;
 
     public Ponto() {
     }
@@ -97,6 +98,14 @@ public class Ponto {
 
     public void setCepPonto(String cepPonto) {
         this.cepPonto = cepPonto;
+    }
+
+    public String getBairroPonto() {
+        return bairroPonto;
+    }
+
+    public void setBairroPonto(String bairroPonto) {
+        this.bairroPonto = bairroPonto;
     }
 
     @Override

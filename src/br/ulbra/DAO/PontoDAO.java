@@ -19,12 +19,12 @@ public class PontoDAO {
         con = ConnectionFactory.getConnection();
     }
 
-    public void criar(Ponto p) {
+    public void create(Ponto p) {
         PreparedStatement stmt = null;
         try {
             stmt = inserirValoresPrincipaisNoStmt(p, "INSERT INTO tbpontos(nomePonto, ruaPonto, "
-                    + "numeroPonto, cidadePonto, estadoPonto, contatoPonto, descricaoPonto, cepPonto) "
-                    + "VALUES( ?,  ?,  ?,  ?,  ?, ?, ?, ?)");
+                    + "numeroPonto, cidadePonto, estadoPonto, contatoPonto, descricaoPonto, cepPonto, bairroPonto) "
+                    + "VALUES( ?,  ?,  ?,  ?,  ?, ?, ?, ?, ?)");
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Ponto turístico salvo com sucesso!");
@@ -34,6 +34,44 @@ public class PontoDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
+    }
+
+    public void update(Ponto p) {
+
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = inserirValoresPrincipaisNoStmt(p, "UPDATE tbpontos SET "
+                    + "nomePonto =  ?, ruaPonto = ?, numeroPonto =  ?, "
+                    + "cidadePonto =  ?, estadoPonto =  ?, contatoPonto = ?, "
+                    + "descricaoPonto = ?, cepPonto = ?, bairroPonto = ? WHERE idPonto = ?");
+
+            stmt.setInt(10, p.getIdPonto());
+
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+
+    public PreparedStatement inserirValoresPrincipaisNoStmt(Ponto ponto, String comandoBd) throws SQLException {
+        PreparedStatement stmt = con.prepareStatement(comandoBd);
+
+        stmt.setString(1, ponto.getNomePonto());
+        stmt.setString(2, ponto.getRuaPonto());
+        stmt.setString(3, ponto.getNumeroPonto());
+        stmt.setString(4, ponto.getCidadePonto());
+        stmt.setString(5, ponto.getEstadoPonto());
+        stmt.setString(6, ponto.getContatoPonto());
+        stmt.setString(7, ponto.getDescricaoPonto());
+        stmt.setString(8, ponto.getCepPonto());
+        stmt.setString(9, ponto.getBairroPonto());
+
+        return stmt;
     }
 
     public void delete(Ponto p) {
@@ -55,26 +93,6 @@ public class PontoDAO {
         }
     }
 
-    public void update(Ponto p) {
-
-        PreparedStatement stmt = null;
-
-        try {
-            stmt = inserirValoresPrincipaisNoStmt(p, "UPDATE tbpontos SET nomePonto =  ?, ruaPonto = ?, numeroPonto =  ?, "
-                    + "cidadePonto =  ?, estadoPonto =  ?, contatoPonto = ?, descricaoPonto = ?, cepPonto = ? WHERE idPonto = ?");
-
-            stmt.setInt(9, p.getIdPonto());
-
-            stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt);
-        }
-    }
-
     public ArrayList<Ponto> organizarEmOrdemAlfabetica(String tipoOrdem) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -87,7 +105,7 @@ public class PontoDAO {
             } else {
                 stmt = con.prepareStatement("SELECT * FROM tbpontos ORDER BY nomePonto");
             }
-            
+
             separarResultados(stmt.executeQuery(), pontos);
 
         } catch (SQLException ex) {
@@ -102,14 +120,13 @@ public class PontoDAO {
         return (ArrayList<Ponto>) pontos;
     }
 
-    public List<Ponto> atualizarTabela() {
+    public List<Ponto> pesquisarTabela() {
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Ponto> pontos = new ArrayList<>();
 
         try {
-
             stmt = con.prepareStatement("SELECT * FROM tbpontos");
             separarResultados(stmt.executeQuery(), pontos);
 
@@ -141,6 +158,26 @@ public class PontoDAO {
         return pontos;
     }
 
+    public void separarResultados(ResultSet rs, List<Ponto> pontos) throws SQLException {
+        while (rs.next()) {
+
+            Ponto ponto = new Ponto();
+
+            ponto.setIdPonto(rs.getInt("idPonto"));
+            ponto.setNomePonto(rs.getString("nomePonto"));
+            ponto.setRuaPonto(rs.getString("ruaPonto"));
+            ponto.setNumeroPonto(rs.getString("numeroPonto"));
+            ponto.setCidadePonto(rs.getString("cidadePonto"));
+            ponto.setEstadoPonto(rs.getString("estadoPonto"));
+            ponto.setContatoPonto(rs.getString("contatoPonto"));
+            ponto.setDescricaoPonto(rs.getString("descricaoPonto"));
+            ponto.setCepPonto(rs.getString("cepPonto"));
+            ponto.setBairroPonto(rs.getString("bairroPonto"));
+
+            pontos.add(ponto);
+        }
+    }
+
     public List<Ponto> pesquisarPorLocal(String campoBd, String pesquisa) {
 
         PreparedStatement stmt = null;
@@ -164,6 +201,7 @@ public class PontoDAO {
                 ponto.setContatoPonto(rs.getString("contatoPonto"));
                 ponto.setDescricaoPonto("");
                 ponto.setCepPonto("");
+                ponto.setBairroPonto("");
 
                 pontos.add(ponto);
             }
@@ -193,17 +231,17 @@ public class PontoDAO {
                 Ponto ponto = new Ponto();
                 ponto.setIdPonto(rs.getInt("idPonto"));
                 ponto.setNomePonto(rs.getString("nomePonto"));
-                ponto.setContatoPonto(rs.getString("contatoPonto"));
                 ponto.setRuaPonto("");
                 ponto.setNumeroPonto("");
                 ponto.setCidadePonto("");
                 ponto.setEstadoPonto("");
-                ponto.setContatoPonto("");
+                ponto.setContatoPonto(rs.getString("contatoPonto"));
                 ponto.setDescricaoPonto("");
                 ponto.setCepPonto("");
+                ponto.setBairroPonto("");
+                
                 pontos.add(ponto);
             }
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
         } finally {
@@ -212,38 +250,4 @@ public class PontoDAO {
         return pontos;
     }
 
-    public PreparedStatement inserirValoresPrincipaisNoStmt(Ponto ponto, String comandoBd) throws SQLException {
-        PreparedStatement stmt = con.prepareStatement(comandoBd);
-
-        stmt.setString(1, ponto.getNomePonto());
-        stmt.setString(2, ponto.getRuaPonto());
-        stmt.setString(3, ponto.getNumeroPonto());
-        stmt.setString(4, ponto.getCidadePonto());
-        stmt.setString(5, ponto.getEstadoPonto());
-        stmt.setString(6, ponto.getContatoPonto());
-        stmt.setString(7, ponto.getDescricaoPonto());
-        stmt.setString(8, ponto.getCepPonto());
-
-        return stmt;
-    }
-    
-    public void separarResultados(ResultSet rs, List<Ponto> pontos) throws SQLException {
-        while (rs.next()) {
-
-            Ponto ponto = new Ponto();
-
-            ponto.setIdPonto(rs.getInt("idPonto"));
-            ponto.setNomePonto(rs.getString("nomePonto"));
-            ponto.setRuaPonto(rs.getString("ruaPonto"));
-            ponto.setNumeroPonto(rs.getString("numeroPonto"));
-            ponto.setCidadePonto(rs.getString("cidadePonto"));
-            ponto.setEstadoPonto(rs.getString("estadoPonto"));
-            ponto.setContatoPonto(rs.getString("contatoPonto"));
-            ponto.setDescricaoPonto(rs.getString("descricaoPonto"));
-            ponto.setCepPonto(rs.getString("cepPonto"));
-
-            pontos.add(ponto);
-        }
-    }
 }
-

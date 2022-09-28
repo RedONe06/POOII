@@ -2,55 +2,35 @@ package br.ulbra.view;
 
 import br.ulbra.DAO.PontoDAO;
 import br.ulbra.entity.Ponto;
-import br.ulbra.view.FrPontos;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Priscila Butzke & Andriele Joras
  */
-public class FrMenu extends javax.swing.JFrame {
+public final class FrMenu extends javax.swing.JFrame {
 
     /**
      * Creates new form FrMenu
+     *
+     * @throws java.sql.SQLException
      */
     public FrMenu() throws SQLException {
         initComponents();
-        readJTable();
+        PontoDAO pdao = new PontoDAO();
+        visualizarPesquisaCompleta(pdao.pesquisarTabela());
         this.setLocationRelativeTo(null);//centraliza no centro da tela ao executar
     }
 
-    public void readJTable() throws SQLException {
-        DefaultTableModel modelo = (DefaultTableModel) tbPontos.getModel();
-        modelo.setNumRows(0);
-        PontoDAO pdao = new PontoDAO();
-        for (Ponto p : pdao.atualizarTabela()) {
-            modelo.addRow(new Object[]{
-                p.getIdPonto(),
-                p.getNomePonto(),
-                p.getRuaPonto(),
-                p.getNumeroPonto(),
-                p.getCidadePonto(),
-                p.getEstadoPonto(),
-                p.getContatoPonto(),
-                p.getDescricaoPonto(),
-                p.getCepPonto()
-            });
-        }
-    }
-
-    //pesquisa por nome
     public void visualizarPesquisaCompleta(List<Ponto> listaDeResposta) throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) tbPontos.getModel();
         modelo.setNumRows(0);
-        PontoDAO pdao = new PontoDAO();
-        for (Ponto p : listaDeResposta) {
+        listaDeResposta.forEach((p) -> {
             modelo.addRow(new Object[]{
                 p.getIdPonto(),
                 p.getNomePonto(),
@@ -60,42 +40,10 @@ public class FrMenu extends javax.swing.JFrame {
                 p.getEstadoPonto(),
                 p.getContatoPonto(),
                 p.getDescricaoPonto(),
-                p.getCepPonto()
+                p.getCepPonto(),
+                p.getBairroPonto()
             });
-        }
-    }
-
-    public void visualizarPesquisaLocal(List<Ponto> listaDeResposta) throws SQLException {
-        DefaultTableModel modelo = (DefaultTableModel) tbPontos.getModel();
-        modelo.setNumRows(0);
-        System.out.println("antes do for");
-        for (Ponto p : listaDeResposta) {
-            System.out.println("dentro do for");
-            modelo.addRow(new Object[]{
-                p.getIdPonto(),
-                p.getNomePonto(),
-                p.getRuaPonto(),
-                p.getNumeroPonto(),
-                p.getCidadePonto(),
-                p.getEstadoPonto(),
-                p.getContatoPonto(),
-                p.getDescricaoPonto(),
-                p.getCepPonto()
-            });
-        }
-        System.out.println("fora do for");
-    }
-
-    public void visualizarPesquisaContato(List<Ponto> listaDeResposta) throws SQLException {
-        DefaultTableModel modelo = (DefaultTableModel) tbPontos.getModel();
-        modelo.setNumRows(0);
-        for (Ponto p : listaDeResposta) {
-            modelo.addRow(new Object[]{
-                p.getIdPonto(),
-                p.getNomePonto(),
-                p.getContatoPonto()
-            });
-        }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -107,7 +55,7 @@ public class FrMenu extends javax.swing.JFrame {
         edPesquisa = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbPontos = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btNovo = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -115,9 +63,9 @@ public class FrMenu extends javax.swing.JFrame {
         liFiltro = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuUsuarios = new javax.swing.JMenuItem();
+        menuPontoTuristico = new javax.swing.JMenuItem();
+        menuSair = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -155,10 +103,10 @@ public class FrMenu extends javax.swing.JFrame {
         tbPontos.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         tbPontos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Cod", "Nome", "Rua", "Número", "Cidade", "Estado", "Contato", "Descrição", "CEP"
+                "Cod", "Nome", "Rua", "Número", "Cidade", "Estado", "Contato", "Descrição", "CEP", "Bairro"
             }
         ));
         tbPontos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -168,15 +116,15 @@ public class FrMenu extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbPontos);
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 102));
-        jButton1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+");
-        jButton1.setBorder(null);
-        jButton1.setFocusable(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btNovo.setBackground(new java.awt.Color(0, 153, 102));
+        btNovo.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 12)); // NOI18N
+        btNovo.setForeground(new java.awt.Color(255, 255, 255));
+        btNovo.setText("+");
+        btNovo.setBorder(null);
+        btNovo.setFocusable(false);
+        btNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btNovoActionPerformed(evt);
             }
         });
 
@@ -227,7 +175,7 @@ public class FrMenu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -253,7 +201,7 @@ public class FrMenu extends javax.swing.JFrame {
                         .addComponent(liFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BtnPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(27, 27, 27)
@@ -267,27 +215,27 @@ public class FrMenu extends javax.swing.JFrame {
         jMenu1.setText("Cadastros ");
         jMenu1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Usuários");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuUsuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        menuUsuarios.setText("Usuários");
+        menuUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuUsuariosActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(menuUsuarios);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem5.setText("Pontos Turísticos");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menuPontoTuristico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        menuPontoTuristico.setText("Pontos Turísticos");
+        menuPontoTuristico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menuPontoTuristicoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem5);
+        jMenu1.add(menuPontoTuristico);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_END, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Sair");
-        jMenu1.add(jMenuItem2);
+        menuSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_END, java.awt.event.InputEvent.CTRL_MASK));
+        menuSair.setText("Sair");
+        jMenu1.add(menuSair);
 
         jMenuBar1.add(jMenu1);
 
@@ -318,46 +266,21 @@ public class FrMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUsuariosActionPerformed
         try {
             new FrUsuario().setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuUsuariosActionPerformed
 
     private void BtnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPesquisaActionPerformed
-        try { //nome estado cidade contato
-            PontoDAO pd = new PontoDAO();
-            switch (liFiltro.getSelectedIndex()) {
-                case 0:
-                    visualizarPesquisaCompleta(pd.pesquisarPorNome(edPesquisa.getText()));
-                    break;
-                case 1:
-                    visualizarPesquisaLocal(pd.pesquisarPorLocal("estadoPonto", edPesquisa.getText()));
-                    break;
-                case 2:
-                    visualizarPesquisaLocal(pd.pesquisarPorLocal("cidadePonto", edPesquisa.getText()));
-                    break;
-                case 3:
-                    visualizarPesquisaContato(pd.pesquisarPorContato(edPesquisa.getText()));
-                    break;
-                case 4:
-                    visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica(""));
-                    break;
-                case 5:
-                    visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica("desc"));
-                    break;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        realizarPesquisa();
     }//GEN-LAST:event_BtnPesquisaActionPerformed
 
     private void edPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edPesquisaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edPesquisaActionPerformed
-
 
     private void tbPontosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPontosMouseClicked
 
@@ -381,16 +304,16 @@ public class FrMenu extends javax.swing.JFrame {
             p.getEdEstado().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 5).toString());
             p.getEdContato().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 6).toString());
             p.getEdDescricao().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 7).toString());
+            p.getEdBairro().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 9).toString());
             try {
                 p.getEdCep().setText(tbPontos.getValueAt(tbPontos.getSelectedRow(), 8).toString());
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 p.getEdCep().setText("");
             }
-
         }
     }//GEN-LAST:event_tbPontosMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
 
         try {
             new FrPontos().setVisible(true);
@@ -415,50 +338,55 @@ public class FrMenu extends javax.swing.JFrame {
         p.getEdContato().setText("");
         p.getEdDescricao().setText("");
         p.getEdCep().setText("");
+        p.getEdBairro().setText("");
+    }//GEN-LAST:event_btNovoActionPerformed
 
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menuPontoTuristicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPontoTuristicoActionPerformed
         try {
             new FrPontos().setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menuPontoTuristicoActionPerformed
 
     private void liFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liFiltroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_liFiltroActionPerformed
 
+
     private void edPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edPesquisaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try { //nome estado cidade contato
-                PontoDAO pd = new PontoDAO();
-                switch (liFiltro.getSelectedIndex()) {
-                    case 0:
-                        visualizarPesquisaCompleta(pd.pesquisarPorNome(edPesquisa.getText()));
-                        break;
-                    case 1:
-                        visualizarPesquisaLocal(pd.pesquisarPorLocal("estadoPonto", edPesquisa.getText()));
-                        break;
-                    case 2:
-                        visualizarPesquisaLocal(pd.pesquisarPorLocal("cidadePonto", edPesquisa.getText()));
-                        break;
-                    case 3:
-                        visualizarPesquisaContato(pd.pesquisarPorContato(edPesquisa.getText()));
-                        break;
-                    case 4:
-                        visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica(""));
-                        break;
-                    case 5:
-                        visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica("desc"));
-                        break;
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            realizarPesquisa();
         }
     }//GEN-LAST:event_edPesquisaKeyPressed
+
+    private void realizarPesquisa() {
+        try {
+            PontoDAO pd = new PontoDAO();
+            switch (liFiltro.getSelectedIndex()) {
+                case 0:
+                    visualizarPesquisaCompleta(pd.pesquisarPorNome(edPesquisa.getText()));
+                    break;
+                case 1:
+                    visualizarPesquisaCompleta(pd.pesquisarPorLocal("estadoPonto", edPesquisa.getText()));
+                    break;
+                case 2:
+                    visualizarPesquisaCompleta(pd.pesquisarPorLocal("cidadePonto", edPesquisa.getText()));
+                    break;
+                case 3:
+                    visualizarPesquisaCompleta(pd.pesquisarPorContato(edPesquisa.getText()));
+                    break;
+                case 4:
+                    visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica(""));
+                    break;
+                case 5:
+                    visualizarPesquisaCompleta(pd.organizarEmOrdemAlfabetica("desc"));
+                    break;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -512,23 +440,23 @@ public class FrMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnPesquisa;
+    private javax.swing.JButton btNovo;
     private javax.swing.JTextField edPesquisa;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> liFiltro;
+    private javax.swing.JMenuItem menuPontoTuristico;
+    private javax.swing.JMenuItem menuSair;
+    private javax.swing.JMenuItem menuUsuarios;
     private javax.swing.JTable tbPontos;
     // End of variables declaration//GEN-END:variables
 }
