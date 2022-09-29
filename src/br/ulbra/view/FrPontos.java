@@ -610,7 +610,7 @@ public class FrPontos extends javax.swing.JFrame {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdaulapooii");
-            JasperPrint print = JasperFillManager.fillReport("C:\\Users\\s.lucas\\Downloads\\POOII-Projeto-Pontos-Turisticos\\POOII\\src\\relatorios\\xxx.jasper", null, con);
+            JasperPrint print = JasperFillManager.fillReport("C:\\relatorios\\xxx.jasper", null, con);
             JasperViewer.viewReport(print, false);
         } catch (SQLException | JRException ex) {
             Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE,

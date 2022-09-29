@@ -1,5 +1,6 @@
 package br.ulbra.view;
 
+import br.ulbra.DAO.ConnectionFactory;
 import br.ulbra.DAO.UsuarioDAO;
 import br.ulbra.entity.BuscadorDeCep;
 import br.ulbra.entity.Usuario;
@@ -327,11 +328,11 @@ public class FrUsuario extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addGap(31, 31, 31)
+                .addGap(35, 35, 35)
                 .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,15 +344,18 @@ public class FrUsuario extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(liFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2))
-                    .addComponent(btPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(liFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(edPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel2)))
+                .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -931,28 +935,26 @@ public class FrUsuario extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         try {
             mostrarRelatorio();
+            System.out.println("Saiu do try do botao");
         } catch (SQLException ex) {
-            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE,
-                    null, ex);
+            JOptionPane.showMessageDialog(null,"erro NO BOTAO:"+ ex.getMessage());
+            Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JRException ex) {
             Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     public void mostrarRelatorio() throws SQLException, JRException {
-
+        System.out.println("Entrou em mostrar");
         Connection con = null;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdaulapooii");
-            JasperPrint print = JasperFillManager.fillReport("C:\\Users\\s.lucas\\Downloads\\POOII-Projeto-Pontos-Turisticos\\POOII\\src\\relatorios\\xxx.jasper", null, con);
-            JasperViewer.viewReport(print, false);
-        } catch (SQLException | JRException ex) {
-            Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE,
-                    null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
-        } finally {
-            con.close();
-        }
+        System.out.println("Passou da conexão");
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdaulapooii", "root", "");
+        System.out.println("passou o root para o banco");
+        JasperPrint print = JasperFillManager.fillReport("C:\\relatorios\\RelatorioUsuario.jasper", null, con);
+        System.out.println("achou o caminho para o jaster");
+        JasperViewer.viewReport(print, false);
+        con.close();
+        System.out.println("Saiu do mostrar");
     }
 
     /**
