@@ -235,6 +235,11 @@ public final class FrMenu extends javax.swing.JFrame {
 
         menuSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_END, java.awt.event.InputEvent.CTRL_MASK));
         menuSair.setText("Sair");
+        menuSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSairActionPerformed(evt);
+            }
+        });
         jMenu1.add(menuSair);
 
         jMenuBar1.add(jMenu1);
@@ -242,10 +247,10 @@ public final class FrMenu extends javax.swing.JFrame {
         jMenu2.setText("Relatórios");
         jMenu2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
-        jMenuItem3.setText("Rel 1");
+        jMenuItem3.setText("Relatório 1");
         jMenu2.add(jMenuItem3);
 
-        jMenuItem4.setText("Rel 2");
+        jMenuItem4.setText("Relatório 2");
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -359,6 +364,10 @@ public final class FrMenu extends javax.swing.JFrame {
             realizarPesquisa();
         }
     }//GEN-LAST:event_edPesquisaKeyPressed
+
+    private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_menuSairActionPerformed
 
     private void realizarPesquisa() {
         try {

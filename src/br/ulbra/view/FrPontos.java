@@ -4,6 +4,8 @@ import br.ulbra.entity.Ponto;
 import br.ulbra.DAO.PontoDAO;
 import br.ulbra.entity.BuscadorDeCep;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -417,10 +423,15 @@ public class FrPontos extends javax.swing.JFrame {
         jMenu2.setText("Relatórios");
         jMenu2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
 
-        jMenuItem4.setText("Rel 1");
+        jMenuItem4.setText("Relatório 1");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
-        jMenuItem3.setText("Rel 2");
+        jMenuItem3.setText("Relatório 2");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -516,11 +527,11 @@ public class FrPontos extends javax.swing.JFrame {
     }
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        
+
         controlarBtn(1);
         FrMenu fm = null;
         Ponto p = new Ponto();
-        
+
         try {
             fm = new FrMenu();
             PontoDAO pd = new PontoDAO();
@@ -586,8 +597,31 @@ public class FrPontos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_edBairroActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        try {
+            mostrarRelatorio() ;
+        } catch (SQLException ex) {
+            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE,null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    public void mostrarRelatorio() throws SQLException {
+
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdaulapooii");
+            JasperPrint print = JasperFillManager.fillReport("C:\\Users\\s.lucas\\Downloads\\POOII-Projeto-Pontos-Turisticos\\POOII\\src\\relatorios\\xxx.jasper", null, con);
+            JasperViewer.viewReport(print, false);
+        } catch (SQLException | JRException ex) {
+            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE,
+                    null, ex);
+            JOptionPane.showMessageDialog(rootPane, ex);
+        } finally {
+            con.close();
+        }
+    }
     /**
-     * @param args the command line arguments
+     * @param args the command line arguments teste
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -600,16 +634,24 @@ public class FrPontos extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrPontos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrPontos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrPontos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrPontos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrPontos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrPontos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrPontos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrPontos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -619,7 +661,8 @@ public class FrPontos extends javax.swing.JFrame {
                 try {
                     new FrPontos().setVisible(true);
                 } catch (SQLException ex) {
-                    Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrPontos.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
