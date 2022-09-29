@@ -935,9 +935,7 @@ public class FrUsuario extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         try {
             mostrarRelatorio();
-            System.out.println("Saiu do try do botao");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"erro NO BOTAO:"+ ex.getMessage());
             Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JRException ex) {
             Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -945,16 +943,13 @@ public class FrUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     public void mostrarRelatorio() throws SQLException, JRException {
-        System.out.println("Entrou em mostrar");
         Connection con = null;
-        System.out.println("Passou da conexão");
+        
         con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdaulapooii", "root", "");
-        System.out.println("passou o root para o banco");
+       
         JasperPrint print = JasperFillManager.fillReport("C:\\relatorios\\RelatorioUsuario.jasper", null, con);
-        System.out.println("achou o caminho para o jaster");
         JasperViewer.viewReport(print, false);
         con.close();
-        System.out.println("Saiu do mostrar");
     }
 
     /**
