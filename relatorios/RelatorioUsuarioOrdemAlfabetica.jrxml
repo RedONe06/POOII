@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cherry" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT `idUsu`,
+	`nomeUsu`,
+	`emailUsu`,
+	`senhaUsu`,
+	`foneUsu`,
+	`sexoUsu`,
+	`cepUsu`,
+	`logradouroUsu`,
+	`bairroUsu`,
+	`cidadeUsu`,
+	`estadoUsu`,
+	`numeroUsu`
+FROM bdaulapooii.tbusuario
+ORDER BY nomeUsu]]>
+	</queryString>
+	<field name="idUsu" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="idUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="nomeUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nomeUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="nomeUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="emailUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="emailUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="emailUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="senhaUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="senhaUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="senhaUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="foneUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="foneUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="foneUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="sexoUsu" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sexoUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="sexoUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="cepUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cepUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="cepUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="logradouroUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="logradouroUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="logradouroUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="bairroUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bairroUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="bairroUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="cidadeUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cidadeUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="cidadeUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="estadoUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="estadoUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="estadoUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<field name="numeroUsu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="numeroUsu"/>
+		<property name="com.jaspersoft.studio.field.label" value="numeroUsu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbusuario"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="115" backcolor="#333333" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
+				<staticText>
+					<reportElement style="SubTitle" x="30" y="30" width="350" height="50" forecolor="#E3E3E3" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
+					<textElement textAlignment="Left">
+						<font fontName="Segoe UI Black" size="35" isBold="false"/>
+					</textElement>
+					<text><![CDATA[RELATÓRIO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" x="30" y="70" width="364" height="30" forecolor="#1ABC9C" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
+					<textElement>
+						<font fontName="Segoe UI Light" size="16" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatório dos usuários cadastrados]]></text>
+				</staticText>
+				<image>
+					<reportElement x="405" y="30" width="170" height="60" uuid="97705585-a0b5-4ec7-86f3-ae10c220e6af"/>
+					<imageExpression><![CDATA["C:/Users/s.lucas/Downloads/Reborn/POOII/src/img/logo.png"]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="98" width="595" height="32" forecolor="#000000" backcolor="#1ABC9C" uuid="e3c14156-5b51-4201-918b-97fdc012e5d4"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="20" y="7" width="189" height="20" forecolor="#FFFFFF" uuid="5c3301e7-a737-4c59-8a2f-a6c79fd1adb8"/>
+					<textElement textAlignment="Left">
+						<font fontName="Segoe UI Semibold" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="7" width="46" height="18" forecolor="#000000" uuid="3b7831f5-7449-415f-9c29-27410691eb2c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="63c82195-ec92-4700-afb6-9b087a7d2893"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[COD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="46" y="7" width="46" height="18" forecolor="#000000" uuid="ab1b6abd-9792-468b-9c9c-26aeb1f784a4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d399e93e-d0ed-4ccb-98b8-889b60c9cad3"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="92" y="7" width="46" height="18" forecolor="#000000" uuid="0ef1ca56-c6a5-406f-bdfe-cf0d9252b468">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ef17cd8a-3a04-49b8-ace8-ebff18684291"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[EMAIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="138" y="7" width="46" height="18" forecolor="#000000" uuid="95b41970-5ea9-4c1e-a7ea-a17412d89ce7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55963d6b-6d99-4bf1-8451-c2f5e90786e0"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SENHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="184" y="7" width="46" height="18" forecolor="#000000" uuid="ebc7a0e1-abe0-4593-a334-82dd523d6933">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="313a4755-8079-4c63-9355-c8690a4ac37d"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FONE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="230" y="7" width="46" height="18" forecolor="#000000" uuid="6ca96da0-feed-46ce-ae75-c49564bd3aae">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94490408-7723-4f52-be06-3bbf11bed745"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SEXO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="276" y="7" width="46" height="18" forecolor="#000000" uuid="95c54d78-1c88-498b-8f3c-e57c3d58c5a5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="57cb8363-6478-4648-bd9e-86f091a01387"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CEP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="322" y="7" width="46" height="18" forecolor="#000000" uuid="24f2233c-18e7-4ce0-859a-e979797b1706">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a58a8a2f-f588-4b9d-a7ec-562921edf9d0"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RUA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="368" y="7" width="46" height="18" forecolor="#000000" uuid="6cbfca30-5a89-44e0-9ccf-f06720f806eb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d70d1882-c9a3-434f-93a5-db303b97cae9"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[BAIRRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="414" y="7" width="46" height="18" forecolor="#000000" uuid="a1a68420-1c32-4a52-86cb-26d1f67b4ba7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6dd70ec-52e4-4b2f-a8b3-13987fa73ef9"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CIDADE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="460" y="7" width="46" height="18" forecolor="#000000" uuid="a5043c8c-aa1a-4085-aa19-edb935fa9f0e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4b8d1c7b-69ff-48f2-8f08-4cadc6b686d2"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="506" y="7" width="46" height="18" forecolor="#000000" uuid="3da2692f-c6c5-44be-ab55-52d83e40100f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="895d39bc-70f3-482d-9a5f-40c989e4f29c"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NÚMERO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="18" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="46" height="18" uuid="9a5ffd4d-f0db-4d83-ae5d-144d7fed9197">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="63c82195-ec92-4700-afb6-9b087a7d2893"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{idUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="46" y="0" width="46" height="18" uuid="b1fcd592-801c-47f3-9c27-1ac533d0076a">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d399e93e-d0ed-4ccb-98b8-889b60c9cad3"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nomeUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="92" y="0" width="46" height="18" uuid="6d2df0ec-3429-45d3-91b4-f27b3b6f2840">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ef17cd8a-3a04-49b8-ace8-ebff18684291"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emailUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="138" y="0" width="46" height="18" uuid="8c1c29c3-4bab-4710-bcdb-4997caee7def">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55963d6b-6d99-4bf1-8451-c2f5e90786e0"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{senhaUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="184" y="0" width="46" height="18" uuid="3ceb8e5d-4fec-456d-a582-e53d0f324da0">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="313a4755-8079-4c63-9355-c8690a4ac37d"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{foneUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="230" y="0" width="46" height="18" uuid="96ffb1d0-dcc5-4015-8cf9-6ef4245b647b">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94490408-7723-4f52-be06-3bbf11bed745"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{sexoUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="276" y="0" width="46" height="18" uuid="d6254eba-8204-4e6b-889b-cf0de359888c">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="57cb8363-6478-4648-bd9e-86f091a01387"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cepUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="322" y="0" width="46" height="18" uuid="04fbe793-cba4-4eeb-a004-45bdd505c8a2">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a58a8a2f-f588-4b9d-a7ec-562921edf9d0"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{logradouroUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="368" y="0" width="46" height="18" uuid="7bd81dab-ffbf-427c-815f-e88e0613ff9c">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d70d1882-c9a3-434f-93a5-db303b97cae9"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bairroUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="414" y="0" width="46" height="18" uuid="54144986-983d-441d-a2dd-4060a8f2a11d">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6dd70ec-52e4-4b2f-a8b3-13987fa73ef9"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cidadeUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="460" y="0" width="46" height="18" uuid="918ed21d-e78d-4196-9862-b376c8c372be">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4b8d1c7b-69ff-48f2-8f08-4cadc6b686d2"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{estadoUsu}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="506" y="0" width="46" height="18" uuid="d3982518-abdb-43ea-b2ac-09550f4f800e">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="895d39bc-70f3-482d-9a5f-40c989e4f29c"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Segoe UI Light" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{numeroUsu}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="1133a906-5b71-476e-9f3e-bc97c97058c1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#C22D2B" uuid="729c3539-f946-4d0e-a0a7-bda2815ea1b0"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="4834e99c-7f6c-485a-b098-50e5187f2ab4"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Segoe UI Semibold" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="9825b46e-76f1-469a-abb8-a1cc27aad685"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Segoe UI Light" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="10" y="0" width="197" height="20" forecolor="#FFFFFF" uuid="137d38c7-1a83-4fc5-b156-9d5f1b1a0ddc"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Segoe UI Historic" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

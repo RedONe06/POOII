@@ -1,5 +1,6 @@
 package br.ulbra.view;
 
+import br.ulbra.DAO.ConnectionFactory;
 import br.ulbra.entity.Ponto;
 import br.ulbra.DAO.PontoDAO;
 import br.ulbra.entity.BuscadorDeCep;
@@ -180,8 +181,8 @@ public class FrPontos extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        relatorioPorCodigo = new javax.swing.JMenuItem();
+        relatorioAlfabetico = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -423,21 +424,21 @@ public class FrPontos extends javax.swing.JFrame {
         jMenu2.setText("Relatórios");
         jMenu2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
 
-        jMenuItem4.setText("Relatório 1");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        relatorioPorCodigo.setText("Relatório por código");
+        relatorioPorCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                relatorioPorCodigoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        jMenu2.add(relatorioPorCodigo);
 
-        jMenuItem3.setText("Relatório 2");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        relatorioAlfabetico.setText("Relatório por Ordem Alfabética");
+        relatorioAlfabetico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                relatorioAlfabeticoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        jMenu2.add(relatorioAlfabetico);
 
         jMenuBar1.add(jMenu2);
 
@@ -550,9 +551,15 @@ public class FrPontos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_edDescricaoActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void relatorioAlfabeticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioAlfabeticoActionPerformed
+        try {
+            mostrarRelatorio("C:\\relatorios\\RelatorioPontoOrdemAlfabetica.jasper");
+        } catch (SQLException ex) {
+            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_relatorioAlfabeticoActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         try {
@@ -597,29 +604,25 @@ public class FrPontos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_edBairroActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void relatorioPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioPorCodigoActionPerformed
         try {
-            mostrarRelatorio() ;
+            mostrarRelatorio("C:\\relatorios\\RelatorioPontoPorCodigo.jasper");
         } catch (SQLException ex) {
-            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE,null, ex);
+            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_relatorioPorCodigoActionPerformed
 
-    public void mostrarRelatorio() throws SQLException {
+    public void mostrarRelatorio(String url) throws SQLException, JRException {
+        Connection con = ConnectionFactory.getConnection();
 
-        Connection con = null;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdaulapooii");
-            JasperPrint print = JasperFillManager.fillReport("C:\\relatorios\\xxx.jasper", null, con);
-            JasperViewer.viewReport(print, false);
-        } catch (SQLException | JRException ex) {
-            Logger.getLogger(FrPontos.class.getName()).log(Level.SEVERE,
-                    null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
-        } finally {
-            con.close();
-        }
+        JasperPrint print = JasperFillManager.fillReport(url, null, con);
+        JasperViewer.viewReport(print, false);
+        con.close();
+
     }
+
     /**
      * @param args the command line arguments teste
      */
@@ -701,9 +704,9 @@ public class FrPontos extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel pnCad;
+    private javax.swing.JMenuItem relatorioAlfabetico;
+    private javax.swing.JMenuItem relatorioPorCodigo;
     // End of variables declaration//GEN-END:variables
 }

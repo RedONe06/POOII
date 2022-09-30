@@ -255,8 +255,8 @@ public class FrUsuario extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        relatorioPorcodigo = new javax.swing.JMenuItem();
+        relatorioAlbabetico = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -628,21 +628,21 @@ public class FrUsuario extends javax.swing.JFrame {
 
         jMenu2.setText("Relátorios");
 
-        jMenuItem5.setText("Relatório 1");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        relatorioPorcodigo.setText("Relatório por código");
+        relatorioPorcodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                relatorioPorcodigoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        jMenu2.add(relatorioPorcodigo);
 
-        jMenuItem4.setText("Relatório 2");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        relatorioAlbabetico.setText("Relatório por Ordem Alfabética");
+        relatorioAlbabetico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                relatorioAlbabeticoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        jMenu2.add(relatorioAlbabetico);
 
         jMenuBar1.add(jMenu2);
 
@@ -928,26 +928,30 @@ public class FrUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void relatorioAlbabeticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioAlbabeticoActionPerformed
         try {
-            mostrarRelatorio();
+            mostrarRelatorio("C:\\relatorios\\RelatorioUsuarioOrdemAlfabetica.jasper");
         } catch (SQLException ex) {
             Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JRException ex) {
             Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_relatorioAlbabeticoActionPerformed
 
-    public void mostrarRelatorio() throws SQLException, JRException {
-        Connection con = null;
-        
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdaulapooii", "root", "");
+    private void relatorioPorcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioPorcodigoActionPerformed
+        try {
+            mostrarRelatorio("C:\\relatorios\\RelatorioUsuarioPorCodigo.jasper");
+        } catch (SQLException ex) {
+            Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(FrUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_relatorioPorcodigoActionPerformed
+
+    public void mostrarRelatorio(String url) throws SQLException, JRException {
+        Connection con = ConnectionFactory.getConnection();
        
-        JasperPrint print = JasperFillManager.fillReport("C:\\relatorios\\RelatorioUsuario.jasper", null, con);
+        JasperPrint print = JasperFillManager.fillReport(url, null, con);
         JasperViewer.viewReport(print, false);
         con.close();
     }
@@ -1035,8 +1039,6 @@ public class FrUsuario extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> liFiltro;
@@ -1044,6 +1046,8 @@ public class FrUsuario extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbF;
     private javax.swing.JRadioButton rbM;
     private javax.swing.JRadioButton rbO;
+    private javax.swing.JMenuItem relatorioAlbabetico;
+    private javax.swing.JMenuItem relatorioPorcodigo;
     private javax.swing.JTable tbUsuario;
     // End of variables declaration//GEN-END:variables
 }
